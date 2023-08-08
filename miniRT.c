@@ -39,15 +39,48 @@ int		rt_try_atof(char *line, int *i, int *j, float *res);
 int		rt_check_minus(char c, int *k, int *m);
 int		rt_try_atof_before_dot(char *line, int *k, float *res);
 int		rt_try_atof_after_dot(char *line, int *k, float *res, float _res);
+int		rt_add_plane_node(t_minirt *list, t_plane *new);
+int		rt_add_sphere_node(t_minirt *list, t_sphere *new);
+int		rt_add_cylinder_node(t_minirt *list, t_cylinder *new);
 int		rt_check_basic_data(t_minirt *list);
+int		rt_clear_data(t_minirt *list);
 int		rt_error_msg(char *s, int status);
 
 int	check_list(t_minirt *list)
 {
+	int		i;
+	t_plane		*tmpp;
+	t_sphere	*tmps;
+	t_cylinder	*tmpc;
+
 	printf("----------    test init    ----------\n");
 	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, list->ambient.color.red, list->ambient.color.green, list->ambient.color.blue);
 	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%f]\n", list->camera.loc.x, list->camera.loc.y, list->camera.loc.z, list->camera.vec.x, list->camera.vec.y, list->camera.vec.z, list->camera.fov);
 	printf("light\t[%f,%f,%f] [%f] [%d,%d,%d]\n", list->light.loc.x, list->light.loc.y, list->light.loc.z, list->light.ratio, list->light.color.red, list->light.color.green, list->light.color.blue);
+	i = 0;
+	tmpp = list->plane;
+	while (tmpp != (void *)0)
+	{
+		printf("plane[%d]\t[%f,%f,%f] [%f,%f,%f] [%d,%d,%d] [%p]\n", i, tmpp->loc.x, tmpp->loc.y, tmpp->loc.z, tmpp->vec.x, tmpp->vec.y, tmpp->vec.z, tmpp->color.red, tmpp->color.green, tmpp->color.blue, tmpp->next);
+		tmpp = tmpp->next;
+		i += 1;
+	}
+	i = 0;
+	tmps = list->sphere;
+	while (tmps != (void *)0)
+	{
+		printf("sphere[%d]\t[%f,%f,%f] [%f] [%d,%d,%d] [%p]\n", i, tmps->loc.x, tmps->loc.y, tmps->loc.z, tmps->diameter, tmps->color.red, tmps->color.green, tmps->color.blue, tmps->next);
+		tmps = tmps->next;
+		i += 1;
+	}
+	i = 0;
+	tmpc = list->cylinder;
+	while (tmpc != (void *)0)
+	{
+		printf("cylinder[%d]\t[%f,%f,%f] [%f,%f,%f] [%f] [%f] [%d,%d,%d] [%p]\n", i, tmpc->loc.x, tmpc->loc.y, tmpc->loc.z, tmpc->vec.x, tmpc->vec.y, tmpc->vec.z, tmpc->diameter, tmpc->height, tmpc->color.red, tmpc->color.green, tmpc->color.blue, tmpc->next);
+		tmpc = tmpc->next;
+		i += 1;
+	}
 	printf("----------    test over    ----------\n");
 	return (SUCCESS);
 }
@@ -58,7 +91,8 @@ int	main(int ac, char **av)
 
 	rt_init(ac, av, &list);
 	check_list(&list);
-//	system("leaks miniRT");
+	rt_clear_data(&list);
+	system("leaks miniRT");
 	return (SUCCESS);
 }
 
@@ -348,68 +382,74 @@ int	rt_set_light(char *line, t_minirt *list)
 
 int	rt_set_plain(char *line, t_minirt *list)
 {
-	t_plane	tmp;
+	t_plane	*tmp;
 	int		i;
 
 	list->count[PLAIN] += 1;
-	ft_memset(&tmp, 0, 0);
+	tmp = (t_plane *)malloc(sizeof(t_plane));
+	ft_memset(tmp, 0, sizeof(t_plane));
 	list = (t_minirt *)list;
 	i = 0;
 	while (line[i] != '\0' && rt_is_strchr(" \t", line[i]))
 		i++;
 	i += 2;
-	if (rt_set_point(line, &i, &tmp.loc))
+	if (rt_set_point(line, &i, &tmp->loc))
 		return (rt_error_msg("syntax error on line pl's location", 1));
-	if (rt_set_point(line, &i, &tmp.vec))
+	if (rt_set_point(line, &i, &tmp->vec))
 		return (rt_error_msg("syntax error on line pl's vactor", 1));
-	if (rt_set_color(line, &i, &tmp.color))
+	if (rt_set_color(line, &i, &tmp->color))
 		return (rt_error_msg("syntax error on line pl's color", 1));
+	rt_add_plane_node(list, tmp);
 	return (SUCCESS);
 }
 
 int	rt_set_sphere(char *line, t_minirt *list)
 {
-	t_sphere	tmp;
+	t_sphere	*tmp;
 	int			i;
 
 	list->count[SPHERE] += 1;
-	ft_memset(&tmp, 0, 0);
+	tmp = (t_sphere *)malloc(sizeof(t_sphere));
+	ft_memset(tmp, 0, sizeof(t_sphere));
 	list = (t_minirt *)list;
 	i = 0;
 	while (line[i] != '\0' && rt_is_strchr(" \t", line[i]))
 		i++;
 	i += 2;
-	if (rt_set_point(line, &i, &tmp.loc))
+	if (rt_set_point(line, &i, &tmp->loc))
 		return (rt_error_msg("syntax error on line sp's location", 1));
-	if (rt_set_float(line, &i, &tmp.diameter))
+	if (rt_set_float(line, &i, &tmp->diameter))
 		return (rt_error_msg("syntax error on line sp's diameter", 1));
-	if (rt_set_color(line, &i, &tmp.color))
+	if (rt_set_color(line, &i, &tmp->color))
 		return (rt_error_msg("syntax error on line sp's color", 1));
+	rt_add_sphere_node(list, tmp);
 	return (SUCCESS);
 }
 
 int	rt_set_cylinder(char *line, t_minirt *list)
 {
-	t_cylinder	tmp;
+	t_cylinder	*tmp;
 	int			i;
 
 	list->count[CYLINDER] += 1;
-	ft_memset(&tmp, 0, 0);
+	tmp = (t_cylinder *)malloc(sizeof(t_cylinder));
+	ft_memset(tmp, 0, sizeof(t_cylinder));
 	list = (t_minirt *)list;
 	i = 0;
 	while (line[i] != '\0' && rt_is_strchr(" \t", line[i]))
 		i++;
 	i += 2;
-	if (rt_set_point(line, &i, &tmp.loc))
+	if (rt_set_point(line, &i, &tmp->loc))
 		return (rt_error_msg("syntax error on line cy's location", 1));
-	if (rt_set_point(line, &i, &tmp.vec))
+	if (rt_set_point(line, &i, &tmp->vec))
 		return (rt_error_msg("syntax error on line cy's vactor", 1));
-	if (rt_set_float(line, &i, &tmp.diameter))
+	if (rt_set_float(line, &i, &tmp->diameter))
 		return (rt_error_msg("syntax error on line cy's diameter", 1));
-	if (rt_set_float(line, &i, &tmp.height))
+	if (rt_set_float(line, &i, &tmp->height))
 		return (rt_error_msg("syntax error on line cy's height", 1));
-	if (rt_set_color(line, &i, &tmp.color))
+	if (rt_set_color(line, &i, &tmp->color))
 		return (rt_error_msg("syntax error on line cy's color", 1));
+	rt_add_cylinder_node(list, tmp);
 	return (SUCCESS);
 }
 
@@ -578,6 +618,54 @@ int	rt_try_atof_after_dot(char *line, int *k, float *res, float _res)
 	return (SUCCESS);
 }
 
+int		rt_add_plane_node(t_minirt *list, t_plane *new)
+{
+	t_plane *tmp;
+
+	if (list->plane == (void *)0)
+		list->plane = new;
+	else
+	{
+		tmp = list->plane;
+		while (tmp->next != (void *)0)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return (SUCCESS);
+}
+
+int		rt_add_sphere_node(t_minirt *list, t_sphere *new)
+{
+	t_sphere *tmp;
+
+	if (list->sphere == (void *)0)
+		list->sphere = new;
+	else
+	{
+		tmp = list->sphere;
+		while (tmp->next != (void *)0)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return (SUCCESS);
+}
+
+int		rt_add_cylinder_node(t_minirt *list, t_cylinder *new)
+{
+	t_cylinder *tmp;
+
+	if (list->cylinder == (void *)0)
+		list->cylinder = new;
+	else
+	{
+		tmp = list->cylinder;
+		while (tmp->next != (void *)0)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	return (SUCCESS);
+}
+
 int	rt_check_basic_data(t_minirt *list)
 {
 	if (list->count[AMBIENT] == 0)
@@ -586,6 +674,36 @@ int	rt_check_basic_data(t_minirt *list)
 		rt_error_msg("one camera is required!", 1);
 	if (list->count[LIGHT] == 0)
 		rt_error_msg("one light is required!", 1);
+	return (SUCCESS);
+}
+
+int	rt_clear_data(t_minirt *list)
+{
+	t_plane		*tmpp;
+	t_sphere	*tmps;
+	t_cylinder	*tmpc;
+
+	tmpp = list->plane;
+	while (tmpp != (void *)0)
+	{
+		list->plane = tmpp->next;
+		free(tmpp);
+		tmpp = list->plane;
+	}
+	tmps = list->sphere;
+	while (tmps != (void *)0)
+	{
+		list->sphere = tmps->next;
+		free(tmps);
+		tmps = list->sphere;
+	}
+	tmpc = list->cylinder;
+	while (tmpc != (void *)0)
+	{
+		list->cylinder = tmpc->next;
+		free(tmpc);
+		tmpc = list->cylinder;
+	}
 	return (SUCCESS);
 }
 
