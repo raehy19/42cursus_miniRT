@@ -47,7 +47,7 @@ int	check_list(t_minirt *list)
 	printf("----------    test init    ----------\n");
 	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, list->ambient.color.red, list->ambient.color.green, list->ambient.color.blue);
 	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%f]\n", list->camera.loc.x, list->camera.loc.y, list->camera.loc.z, list->camera.vec.x, list->camera.vec.y, list->camera.vec.z, list->camera.fov);
-	printf("light\t[%f,%f,%f] [%f] [%d,%d,%d]\n", list->light.loc.x, list->light.loc.x, list->light.loc.x, list->light.ratio, list->light.color.red, list->light.color.green, list->light.color.blue);
+	printf("light\t[%f,%f,%f] [%f] [%d,%d,%d]\n", list->light.loc.x, list->light.loc.y, list->light.loc.z, list->light.ratio, list->light.color.red, list->light.color.green, list->light.color.blue);
 	printf("----------    test over    ----------\n");
 	return (SUCCESS);
 }
@@ -573,7 +573,7 @@ int	rt_try_atof_after_dot(char *line, int *k, float *res, float _res)
 		_res += line[*k + last - i - 1] - '0';
 		i += 1;
 	}
-	*res = *res + _res;
+	*res = *res + _res/10;
 	*k += last;
 	return (SUCCESS);
 }
