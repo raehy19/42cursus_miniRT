@@ -44,6 +44,9 @@ int		rt_add_sphere_node(t_minirt *list, t_sphere *new);
 int		rt_add_cylinder_node(t_minirt *list, t_cylinder *new);
 int		rt_check_basic_data(t_minirt *list);
 int		rt_clear_data(t_minirt *list);
+int		rt_clear_plane_node(t_minirt *list, t_plane *tmpp);
+int		rt_clear_sphere_node(t_minirt *list, t_sphere *tmps);
+int		rt_clear_cylinder_node(t_minirt *list, t_cylinder *tmpc);
 int		rt_error_msg(char *s, int status);
 
 int	check_list(t_minirt *list)
@@ -613,14 +616,14 @@ int	rt_try_atof_after_dot(char *line, int *k, float *res, float _res)
 		_res += line[*k + last - i - 1] - '0';
 		i += 1;
 	}
-	*res = *res + _res/10;
+	*res = *res + _res / 10;
 	*k += last;
 	return (SUCCESS);
 }
 
-int		rt_add_plane_node(t_minirt *list, t_plane *new)
+int	rt_add_plane_node(t_minirt *list, t_plane *new)
 {
-	t_plane *tmp;
+	t_plane	*tmp;
 
 	if (list->plane == (void *)0)
 		list->plane = new;
@@ -634,9 +637,9 @@ int		rt_add_plane_node(t_minirt *list, t_plane *new)
 	return (SUCCESS);
 }
 
-int		rt_add_sphere_node(t_minirt *list, t_sphere *new)
+int	rt_add_sphere_node(t_minirt *list, t_sphere *new)
 {
-	t_sphere *tmp;
+	t_sphere	*tmp;
 
 	if (list->sphere == (void *)0)
 		list->sphere = new;
@@ -650,9 +653,9 @@ int		rt_add_sphere_node(t_minirt *list, t_sphere *new)
 	return (SUCCESS);
 }
 
-int		rt_add_cylinder_node(t_minirt *list, t_cylinder *new)
+int	rt_add_cylinder_node(t_minirt *list, t_cylinder *new)
 {
-	t_cylinder *tmp;
+	t_cylinder	*tmp;
 
 	if (list->cylinder == (void *)0)
 		list->cylinder = new;
@@ -679,10 +682,14 @@ int	rt_check_basic_data(t_minirt *list)
 
 int	rt_clear_data(t_minirt *list)
 {
-	t_plane		*tmpp;
-	t_sphere	*tmps;
-	t_cylinder	*tmpc;
+	rt_clear_plane_node(list, (void *)0);
+	rt_clear_sphere_node(list, (void *)0);
+	rt_clear_cylinder_node(list, (void *)0);
+	return (SUCCESS);
+}
 
+int	rt_clear_plane_node(t_minirt *list, t_plane *tmpp)
+{
 	tmpp = list->plane;
 	while (tmpp != (void *)0)
 	{
@@ -690,6 +697,11 @@ int	rt_clear_data(t_minirt *list)
 		free(tmpp);
 		tmpp = list->plane;
 	}
+	return (SUCCESS);
+}
+
+int	rt_clear_sphere_node(t_minirt *list, t_sphere *tmps)
+{
 	tmps = list->sphere;
 	while (tmps != (void *)0)
 	{
@@ -697,6 +709,11 @@ int	rt_clear_data(t_minirt *list)
 		free(tmps);
 		tmps = list->sphere;
 	}
+	return (SUCCESS);
+}
+
+int	rt_clear_cylinder_node(t_minirt *list, t_cylinder *tmpc)
+{
 	tmpc = list->cylinder;
 	while (tmpc != (void *)0)
 	{
