@@ -69,26 +69,29 @@ typedef struct s_light
 
 typedef struct s_plane
 {
-	t_point	loc;
-	t_point	vec;
-	t_color	color;
-}			t_plane;
+	t_point			loc;
+	t_point			vec;
+	t_color			color;
+	struct s_plane	*next;
+}					t_plane;
 
 typedef struct s_sphere
 {
-	t_point	loc;
-	float	diameter;
-	t_color	color;
-}			t_sphere;
+	t_point			loc;
+	float			diameter;
+	t_color			color;
+	struct s_sphere	*next;
+}					t_sphere;
 
 typedef struct s_cylinder
 {
-	t_point	loc;
-	t_point	vec;
-	float	diameter;
-	float	height;
-	t_color	color;
-}			t_cylinder;
+	t_point				loc;
+	t_point				vec;
+	float				diameter;
+	float				height;
+	t_color				color;
+	struct s_cylinder	*next;
+}						t_cylinder;
 
 typedef struct s_minirt
 {
@@ -96,8 +99,8 @@ typedef struct s_minirt
 	t_ambient	ambient;
 	t_camera	camera;
 	t_light		light;
-	t_sphere	*sphere;
 	t_plane		*plane;
+	t_sphere	*sphere;
 	t_cylinder	*cylinder;
 }				t_minirt;
 
