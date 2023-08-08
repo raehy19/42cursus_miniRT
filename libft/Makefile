@@ -6,14 +6,14 @@
 #    By: jijeong <jijeong@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 22:56:01 by jijeong           #+#    #+#              #
-#    Updated: 2022/04/30 13:02:33 by jijeong          ###   ########.fr        #
+#    Updated: 2023/08/08 14:58:51 by jijeong          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 AR = ar
 ARFLAG = -rcvs
-CC = gcc
+CC = cc
 CFLAG = -Wall -Wextra -Werror
 RM = rm
 RMFLAG = -fr

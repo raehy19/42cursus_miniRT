@@ -6,7 +6,7 @@
 /*   By: jijeong <jijeong@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:36:33 by jijeong           #+#    #+#             */
-/*   Updated: 2023/07/03 13:36:45 by jijeong          ###   ########.fr       */
+/*   Updated: 2023/08/08 17:38:29 by jijeong          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,27 @@ int		rt_set_color(char *line, int *i, t_color *tmp);
 int		rt_try_atoi(char *line, int *i, int *j, int *res);
 int		rt_try_atof(char *line, int *i, int *j, float *res);
 int		rt_check_minus(char c, int *k, int *m);
+int		rt_try_atof_before_dot(char *line, int *k, float *res);
+int		rt_try_atof_after_dot(char *line, int *k, float *res, float _res);
 int		rt_check_basic_data(t_minirt *list);
 int		rt_error_msg(char *s, int status);
+
+int	check_list(t_minirt *list)
+{
+	printf("----------    test init    ----------\n");
+	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, list->ambient.color.red, list->ambient.color.green, list->ambient.color.blue);
+	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%f]\n", list->camera.loc.x, list->camera.loc.y, list->camera.loc.z, list->camera.vec.x, list->camera.vec.y, list->camera.vec.z, list->camera.fov);
+	printf("light\t[%f,%f,%f] [%f] [%d,%d,%d]\n", list->light.loc.x, list->light.loc.x, list->light.loc.x, list->light.ratio, list->light.color.red, list->light.color.green, list->light.color.blue);
+	printf("----------    test over    ----------\n");
+	return (SUCCESS);
+}
 
 int	main(int ac, char **av)
 {
 	t_minirt	list;
 
 	rt_init(ac, av, &list);
+	check_list(&list);
 //	system("leaks miniRT");
 	return (SUCCESS);
 }
@@ -286,9 +299,9 @@ int	rt_set_ambient_lightning(char *line, t_minirt *list)
 	while (line[i] != '\0' && rt_is_strchr(" \t", line[i]))
 		i++;
 	i++;
-	if (rt_set_float(line, &i, &list->ambent.ratio))
+	if (rt_set_float(line, &i, &list->ambient.ratio))
 		return (rt_error_msg("syntax error on line A's ratio", 1));
-	if (rt_set_color(line, &i, &list->ambent.color))
+	if (rt_set_color(line, &i, &list->ambient.color))
 		return (rt_error_msg("syntax error on line A's color", 1));
 	return (SUCCESS);
 }
@@ -400,17 +413,6 @@ int	rt_set_cylinder(char *line, t_minirt *list)
 	return (SUCCESS);
 }
 
-int	rt_check_basic_data(t_minirt *list)
-{
-	if (list->count[AMBIENT] == 0)
-		rt_error_msg("one ambient lightning is required!", 1);
-	if (list->count[CAMERA] == 0)
-		rt_error_msg("one camera is required!", 1);
-	if (list->count[LIGHT] == 0)
-		rt_error_msg("one light is required!", 1);
-	return (SUCCESS);
-}
-
 int	rt_set_float(char *line, int *i, float *tmp)
 {
 	int		j;
@@ -434,8 +436,6 @@ int	rt_set_point(char *line, int *i, t_point *tmp)
 	while (line[*i] != '\0' && rt_is_strchr(" \t", line[*i]))
 		*i += 1;
 	j = 0;
-	while (line[*i + j] != '\0' && rt_is_strchr(" \t", line[*i]) == FALSE)
-		j += 1;
 	if (rt_try_atof(line, i, &j, &res))
 		return (FAIL);
 	tmp->x = res;
@@ -489,7 +489,7 @@ int	rt_try_atoi(char *line, int *i, int *j, int *res)
 	k = 0;
 	*res = 0;
 	while (line[*i + *j + k] != '\0')
-	{printf("\n[%c]\n",line[*i + *j + k] );
+	{
 		if (rt_is_strchr(" \t,", line[*i + *j + k]))
 			break ;
 		if (ft_isdigit(line[*i + *j + k]) == 0)
@@ -501,31 +501,24 @@ int	rt_try_atoi(char *line, int *i, int *j, int *res)
 	if (k == 0)
 		return (FAIL);
 	*j += k;
-	printf("\n\t[%d]\n", *res);
 	return (SUCCESS);
 }
 
 int	rt_try_atof(char *line, int *i, int *j, float *res)
 {
-	int	k;
-	int	m;
+	int		k;
+	int		m;
 
+	*res = 0;
 	if (rt_check_minus(line[*i + *j], &k, &m))
 		return (FAIL);
-	while (line[*i + *j + k] != '\0')
+	if (rt_try_atof_before_dot(&line[*i + *j], &k, res))
+		return (FAIL);
+	if (line[*i + *j + k] == '.')
 	{
-		if (rt_is_strchr(".", line[*i + *j + k]))
-		{
-			k++;
-			continue ;
-		}
-		if (rt_is_strchr(" \t,", line[*i + *j + k]))
-			break ;
-		if (ft_isdigit(line[*i + *j + k]) == 0)
-			return (FAIL);
-		*res *= 10;
-		*res += line[*i + *j + k] - '0';
 		k += 1;
+		if (rt_try_atof_after_dot(&line[*i + *j], &k, res, 0))
+			return (FAIL);
 	}
 	if ((m == 1 && k == 0) || (m == -1 && k == 1))
 		return (FAIL);
@@ -545,6 +538,54 @@ int	rt_check_minus(char c, int *k, int *m)
 		*m = -1;
 		*k = 1;
 	}
+	return (SUCCESS);
+}
+
+int	rt_try_atof_before_dot(char *line, int *k, float *res)
+{
+	while (line[*k] != 0)
+	{
+		if (rt_is_strchr(" \t,.", line[*k]))
+			break ;
+		if (ft_isdigit(line[*k]) == 0)
+			return (FAIL);
+		*res *= 10;
+		*res += line[*k] - '0';
+		*k += 1;
+	}
+	return (SUCCESS);
+}
+
+int	rt_try_atof_after_dot(char *line, int *k, float *res, float _res)
+{
+	int	last;
+	int	i;
+
+	i = 0;
+	last = 0;
+	while (rt_is_strchr(" \t,", line[*k + last]) == FALSE)
+		last++;
+	while (i < last)
+	{
+		if (ft_isdigit(line[*k + last - i - 1]) == 0)
+			return (FAIL);
+		_res /= 10;
+		_res += line[*k + last - i - 1] - '0';
+		i += 1;
+	}
+	*res = *res + _res;
+	*k += last;
+	return (SUCCESS);
+}
+
+int	rt_check_basic_data(t_minirt *list)
+{
+	if (list->count[AMBIENT] == 0)
+		rt_error_msg("one ambient lightning is required!", 1);
+	if (list->count[CAMERA] == 0)
+		rt_error_msg("one camera is required!", 1);
+	if (list->count[LIGHT] == 0)
+		rt_error_msg("one light is required!", 1);
 	return (SUCCESS);
 }
 
