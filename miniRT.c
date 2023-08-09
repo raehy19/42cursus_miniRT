@@ -48,54 +48,19 @@ int		rt_clear_plane_node(t_minirt *list, t_plane *tmpp);
 int		rt_clear_sphere_node(t_minirt *list, t_sphere *tmps);
 int		rt_clear_cylinder_node(t_minirt *list, t_cylinder *tmpc);
 int		rt_error_msg(char *s, int status);
-
-int	check_list(t_minirt *list)
-{
-	int		i;
-	t_plane		*tmpp;
-	t_sphere	*tmps;
-	t_cylinder	*tmpc;
-
-	printf("----------    test init    ----------\n");
-	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, list->ambient.color.red, list->ambient.color.green, list->ambient.color.blue);
-	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%f]\n", list->camera.loc.x, list->camera.loc.y, list->camera.loc.z, list->camera.vec.x, list->camera.vec.y, list->camera.vec.z, list->camera.fov);
-	printf("light\t[%f,%f,%f] [%f] [%d,%d,%d]\n", list->light.loc.x, list->light.loc.y, list->light.loc.z, list->light.ratio, list->light.color.red, list->light.color.green, list->light.color.blue);
-	i = 0;
-	tmpp = list->plane;
-	while (tmpp != (void *)0)
-	{
-		printf("plane[%d]\t[%f,%f,%f] [%f,%f,%f] [%d,%d,%d] [%p]\n", i, tmpp->loc.x, tmpp->loc.y, tmpp->loc.z, tmpp->vec.x, tmpp->vec.y, tmpp->vec.z, tmpp->color.red, tmpp->color.green, tmpp->color.blue, tmpp->next);
-		tmpp = tmpp->next;
-		i += 1;
-	}
-	i = 0;
-	tmps = list->sphere;
-	while (tmps != (void *)0)
-	{
-		printf("sphere[%d]\t[%f,%f,%f] [%f] [%d,%d,%d] [%p]\n", i, tmps->loc.x, tmps->loc.y, tmps->loc.z, tmps->diameter, tmps->color.red, tmps->color.green, tmps->color.blue, tmps->next);
-		tmps = tmps->next;
-		i += 1;
-	}
-	i = 0;
-	tmpc = list->cylinder;
-	while (tmpc != (void *)0)
-	{
-		printf("cylinder[%d]\t[%f,%f,%f] [%f,%f,%f] [%f] [%f] [%d,%d,%d] [%p]\n", i, tmpc->loc.x, tmpc->loc.y, tmpc->loc.z, tmpc->vec.x, tmpc->vec.y, tmpc->vec.z, tmpc->diameter, tmpc->height, tmpc->color.red, tmpc->color.green, tmpc->color.blue, tmpc->next);
-		tmpc = tmpc->next;
-		i += 1;
-	}
-	printf("----------    test over    ----------\n");
-	return (SUCCESS);
-}
+int		print_list_data(t_minirt *list);
+int		print_plane_list_data(t_minirt *list, t_plane *tmpp);
+int		print_sphere_list_data(t_minirt *list, t_sphere *tmps);
+int		print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
 
 int	main(int ac, char **av)
 {
 	t_minirt	list;
 
 	rt_init(ac, av, &list);
-	check_list(&list);
+	print_list_data(&list);
 	rt_clear_data(&list);
-	system("leaks miniRT");
+//	system("leaks miniRT");
 	return (SUCCESS);
 }
 
@@ -732,4 +697,82 @@ int	rt_error_msg(char *s, int status)
 	write(2, "\n", 1);
 	exit(status);
 	return (status);
+}
+
+int	print_list_data(t_minirt *list)
+{
+	printf("----------    test init    ----------\n");
+	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, \
+	list->ambient.color.red, \
+	list->ambient.color.green, \
+	list->ambient.color.blue);
+	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%f]\n", \
+	list->camera.loc.x, list->camera.loc.y, list->camera.loc.z, \
+	list->camera.vec.x, list->camera.vec.y, list->camera.vec.z, \
+	list->camera.fov);
+	printf("light\t[%f,%f,%f] [%f] [%d,%d,%d]\n", \
+	list->light.loc.x, list->light.loc.y, list->light.loc.z, \
+	list->light.ratio, \
+	list->light.color.red, list->light.color.green, list->light.color.blue);
+	print_plane_list_data(list, (void *)0);
+	print_sphere_list_data(list, (void *)0);
+	print_cylinder_list_data(list, (void *)0);
+	printf("----------    test over    ----------\n");
+	return (SUCCESS);
+}
+
+int	print_plane_list_data(t_minirt *list, t_plane *tmpp)
+{
+	int	i;
+
+	i = 0;
+	tmpp = list->plane;
+	while (tmpp != (void *)0)
+	{
+		printf("plane[%d]\t[%f,%f,%f] [%f,%f,%f] [%d,%d,%d] [%p]\n", i, \
+		tmpp->loc.x, tmpp->loc.y, tmpp->loc.z, \
+		tmpp->vec.x, tmpp->vec.y, tmpp->vec.z, \
+		tmpp->color.red, tmpp->color.green, tmpp->color.blue, tmpp->next);
+		tmpp = tmpp->next;
+		i += 1;
+	}
+	return (SUCCESS);
+}
+
+int	print_sphere_list_data(t_minirt *list, t_sphere *tmps)
+{
+	int	i;
+
+	i = 0;
+	tmps = list->sphere;
+	while (tmps != (void *)0)
+	{
+		printf("sphere[%d]\t[%f,%f,%f] [%f] [%d,%d,%d] [%p]\n", i, \
+		tmps->loc.x, tmps->loc.y, tmps->loc.z, \
+		tmps->diameter, \
+		tmps->color.red, tmps->color.green, tmps->color.blue, tmps->next);
+		tmps = tmps->next;
+		i += 1;
+	}
+	return (SUCCESS);
+}
+
+int	print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc)
+{
+	int	i;
+
+	i = 0;
+	tmpc = list->cylinder;
+	while (tmpc != (void *)0)
+	{
+		printf("cylinder[%d]\t", i);
+		printf("[%f,%f,%f] [%f,%f,%f] [%f] \[%f] [%d,%d,%d] [%p]\n", \
+		tmpc->loc.x, tmpc->loc.y, tmpc->loc.z, \
+		tmpc->vec.x, tmpc->vec.y, tmpc->vec.z, \
+		tmpc->diameter, tmpc->height, \
+		tmpc->color.red, tmpc->color.green, tmpc->color.blue, tmpc->next);
+		tmpc = tmpc->next;
+		i += 1;
+	}
+	return (SUCCESS);
 }
