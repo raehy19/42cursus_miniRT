@@ -48,19 +48,30 @@ int		rt_clear_plane_node(t_minirt *list, t_plane *tmpp);
 int		rt_clear_sphere_node(t_minirt *list, t_sphere *tmps);
 int		rt_clear_cylinder_node(t_minirt *list, t_cylinder *tmpc);
 int		rt_error_msg(char *s, int status);
-int		print_list_data(t_minirt *list);
-int		print_plane_list_data(t_minirt *list, t_plane *tmpp);
-int		print_sphere_list_data(t_minirt *list, t_sphere *tmps);
-int		print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
+int		rt_print_list_data(t_minirt *list);
+int		rt_print_plane_list_data(t_minirt *list, t_plane *tmpp);
+int		rt_print_sphere_list_data(t_minirt *list, t_sphere *tmps);
+int		rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
+int		rt_keyhook(int k, t_mlxlist *list);
+int		rt_end(t_mlxlist *list);
+int		rt_set_mlx(t_mlxlist *mlx);
+int		rt_get_img(t_mlxlist *mlx, t_minirt *list);
+int		rt_get_pixel_color(t_minirt *list, int a, int b, int *color);
+int		rt_display_mlx(t_mlxlist *mlx, char *name);
+void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
 
 int	main(int ac, char **av)
 {
 	t_minirt	list;
+	t_mlxlist	mlx;
 
 	rt_init(ac, av, &list);
-	print_list_data(&list);
+	rt_print_list_data(&list);
+	rt_set_mlx(&mlx);
+	rt_get_img(&mlx, &list);
 	rt_clear_data(&list);
-//	system("leaks miniRT");
+	rt_display_mlx(&mlx, av[0]);
+	system("leaks miniRT");
 	return (SUCCESS);
 }
 
@@ -699,7 +710,7 @@ int	rt_error_msg(char *s, int status)
 	return (status);
 }
 
-int	print_list_data(t_minirt *list)
+int	rt_print_list_data(t_minirt *list)
 {
 	printf("----------    test init    ----------\n");
 	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, \
@@ -714,14 +725,14 @@ int	print_list_data(t_minirt *list)
 	list->light.loc.x, list->light.loc.y, list->light.loc.z, \
 	list->light.ratio, \
 	list->light.color.red, list->light.color.green, list->light.color.blue);
-	print_plane_list_data(list, (void *)0);
-	print_sphere_list_data(list, (void *)0);
-	print_cylinder_list_data(list, (void *)0);
+	rt_print_plane_list_data(list, (void *)0);
+	rt_print_sphere_list_data(list, (void *)0);
+	rt_print_cylinder_list_data(list, (void *)0);
 	printf("----------    test over    ----------\n");
 	return (SUCCESS);
 }
 
-int	print_plane_list_data(t_minirt *list, t_plane *tmpp)
+int	rt_print_plane_list_data(t_minirt *list, t_plane *tmpp)
 {
 	int	i;
 
@@ -739,7 +750,7 @@ int	print_plane_list_data(t_minirt *list, t_plane *tmpp)
 	return (SUCCESS);
 }
 
-int	print_sphere_list_data(t_minirt *list, t_sphere *tmps)
+int	rt_print_sphere_list_data(t_minirt *list, t_sphere *tmps)
 {
 	int	i;
 
@@ -757,7 +768,7 @@ int	print_sphere_list_data(t_minirt *list, t_sphere *tmps)
 	return (SUCCESS);
 }
 
-int	print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc)
+int	rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc)
 {
 	int	i;
 
@@ -775,4 +786,79 @@ int	print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc)
 		i += 1;
 	}
 	return (SUCCESS);
+}
+
+int	rt_keyhook(int k, t_mlxlist *list)
+{
+	if (k == 53)
+		rt_end(list);
+	return (0);
+}
+
+int	rt_end(t_mlxlist *list)
+{
+	printf("miniRT : good bye!\n");
+	mlx_destroy_window(list->mlx, list->win);
+	mlx_destroy_image(list->mlx, list->img);
+	exit(0);
+}
+
+int	rt_set_mlx(t_mlxlist *mlx)
+{
+	mlx->mlx = mlx_init();
+	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
+	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bpp, \
+	&mlx->linel, &mlx->endian);
+	printf("[%p][%d, %d, %d][%lu]\n", mlx->addr, mlx->bpp, mlx->linel, \
+	mlx->endian, sizeof(int));
+	return (SUCCESS);
+}
+
+int	rt_get_img(t_mlxlist *mlx, t_minirt *list)
+{
+	int	i;
+	int	j;
+	int	color;
+
+	i = 0;
+	while (i < HEIGHT)
+	{
+		j = 0;
+		while (j < WIDTH)
+		{
+			if (rt_get_pixel_color(list, j, i, &color) == FAIL)
+				return (rt_error_msg("something wrong in simulation", 1));
+			rt_mlx_pixel_put(mlx, j, i, 0x00ffffff);
+			j++;
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
+{
+	t_minirt *tmp;
+
+	tmp = list;
+	*color = a + b;
+	return (SUCCESS);
+}
+
+int	rt_display_mlx(t_mlxlist *mlx, char *name)
+{
+	mlx->win = mlx_new_window(mlx->mlx, WIDTH, HEIGHT, name);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	mlx_hook(mlx->win, 2, 0, rt_keyhook, mlx);
+	mlx_hook(mlx->win, 17, 0, rt_end, mlx);
+	mlx_loop(mlx->mlx);
+	return (SUCCESS);
+}
+
+void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->linel + x * (data->bpp / 8));
+	*(unsigned int *)dst = color;
 }

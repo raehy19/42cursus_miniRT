@@ -13,6 +13,7 @@
 NAME = miniRT
 CC = cc
 CFLAG = -Wall -Wextra -Werror
+LMXFLAG= -l mlx  -framework OpenGL -framework AppKit
 RM = rm
 RMFLAGS = -fr
 SRCS = miniRT.c
@@ -20,10 +21,10 @@ OBJS = $(SRCS:%.c=%.o)
 
 $(NAME) : $(OBJS)
 	make -C libft
-	$(CC) $(CFLAG) $^ -l ft -L libft -o $@
+	$(CC) $(CFLAG) $^ $(LMXFLAG) -l ft -L libft -o $@
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $^ -o $@
+	$(CC) $(CFLAG) -Imlx -c $^ -o $@
 
 
 all : $(NAME)

@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
+# include <mlx.h>
 # include "libft/libft.h"
 
 # define FALSE 0
@@ -32,6 +33,9 @@
 # define PLAIN 3
 # define SPHERE 4
 # define CYLINDER 5
+
+# define HEIGHT 800
+# define WIDTH 1000
 
 typedef struct s_point
 {
@@ -103,5 +107,16 @@ typedef struct s_minirt
 	t_sphere	*sphere;
 	t_cylinder	*cylinder;
 }				t_minirt;
+
+typedef struct s_mlxlist
+{
+	void		*mlx;
+	void		*win;
+	void		*img;
+	char		*addr;
+	int			bpp;
+	int			linel;
+	int			endian;
+}				t_mlxlist;
 
 #endif
