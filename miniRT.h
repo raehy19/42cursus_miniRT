@@ -120,4 +120,73 @@ typedef struct s_mlxlist
 	int			endian;
 }				t_mlxlist;
 
+// rt_read_file.c
+void	rt_init(int ac, char **av, t_minirt *list);
+void	rt_check_arg(int ac, char **av);
+int		rt_open_file(char *filename);
+void	rt_set_data_from_file(int fd, t_minirt *list);
+// rt_read_getline1.c
+int		rt_is_strchr(char *s, char c);
+char	*rt_getline(int fd);
+char	*rt_eof_check(char **rest, char *line, int read_len);
+int		rt_read_line(int fd, char *buffer, char **rest);
+int		rt_rl_strchr(const char *s, int c);
+// rt_read_getline2.c
+char	*rt_strndup(char *buffer, ssize_t len);
+char	*rt_line_check(char **rest);
+// rt_set_data1.c
+int		rt_check_identifier(char *line, t_minirt *list);
+int		rt_is_identifier(char *line, char *identifier, int len);
+int		rt_set_ambient_lightning(char *line, t_minirt *list);
+int		rt_set_camera(char *line, t_minirt *list);
+int		rt_set_light(char *line, t_minirt *list);
+// rt_set_data2.c
+int		rt_set_plain(char *line, t_minirt *list);
+int		rt_set_sphere(char *line, t_minirt *list);
+int		rt_set_cylinder(char *line, t_minirt *list);
+// rt_set_data3.c
+int		rt_set_float(char *line, int *i, float *tmp);
+int		rt_set_point(char *line, int *i, t_point *tmp);
+int		rt_set_color(char *line, int *i, t_color *tmp);
+// rt_set_data4.c
+int		rt_try_atoi(char *line, int *i, int *j, int *res);
+int		rt_try_atof(char *line, int *i, int *j, float *res);
+int		rt_check_minus(char c, int *k, int *m);
+int		rt_try_atof_before_dot(char *line, int *k, float *res);
+int		rt_try_atof_after_dot(char *line, int *k, float *res, float _res);
+// rt_set_data5.c
+int		rt_add_plane_node(t_minirt *list, t_plane *new);
+int		rt_add_sphere_node(t_minirt *list, t_sphere *new);
+int		rt_add_cylinder_node(t_minirt *list, t_cylinder *new);
+// rt_check_data1.c
+int		rt_check_basic_data(t_minirt *list);
+int		rt_check_ambient_range(t_ambient ambient);
+int		rt_check_camera_range(t_camera camera);
+int		rt_check_light_range(t_light light);
+// rt_check_data2.c
+int		rt_check_sphere_range(t_sphere *sphere);
+int		rt_check_plane_range(t_plane *plane);
+int		rt_check_cylinder_range(t_cylinder *cylinder);
+// rt_clear_data.c
+int		rt_clear_data(t_minirt *list);
+int		rt_clear_plane_node(t_minirt *list, t_plane *tmpp);
+int		rt_clear_sphere_node(t_minirt *list, t_sphere *tmps);
+int		rt_clear_cylinder_node(t_minirt *list, t_cylinder *tmpc);
+// rt_error.c
+int		rt_error_msg(char *s, int status);
+// rt_print.c
+int		rt_print_list_data(t_minirt *list);
+int		rt_print_plane_list_data(t_minirt *list, t_plane *tmpp);
+int		rt_print_sphere_list_data(t_minirt *list, t_sphere *tmps);
+int		rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
+// rt_mlx_func.c
+int		rt_keyhook(int k, t_mlxlist *list);
+int		rt_end(t_mlxlist *list);
+// rt_mlx_display.c
+int		rt_set_mlx(t_mlxlist *mlx);
+int		rt_get_img(t_mlxlist *mlx, t_minirt *list);
+int		rt_get_pixel_color(t_minirt *list, int a, int b, int *color);
+int		rt_display_mlx(t_mlxlist *mlx, char *name);
+void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
+
 #endif
