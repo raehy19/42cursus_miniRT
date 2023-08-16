@@ -43,6 +43,12 @@ int		rt_add_plane_node(t_minirt *list, t_plane *new);
 int		rt_add_sphere_node(t_minirt *list, t_sphere *new);
 int		rt_add_cylinder_node(t_minirt *list, t_cylinder *new);
 int		rt_check_basic_data(t_minirt *list);
+int		rt_check_ambient_range(t_ambient ambient);
+int		rt_check_camera_range(t_camera camera);
+int		rt_check_light_range(t_light light);
+int		rt_check_sphere_range(t_sphere *sphere);
+int		rt_check_plane_range(t_plane *plane);
+int		rt_check_cylinder_range(t_cylinder *cylinder);
 int		rt_clear_data(t_minirt *list);
 int		rt_clear_plane_node(t_minirt *list, t_plane *tmpp);
 int		rt_clear_sphere_node(t_minirt *list, t_sphere *tmps);
@@ -653,6 +659,108 @@ int	rt_check_basic_data(t_minirt *list)
 		rt_error_msg("one camera is required!", 1);
 	if (list->count[LIGHT] == 0)
 		rt_error_msg("one light is required!", 1);
+	rt_check_ambient_range(list->ambient);
+	rt_check_camera_range(list->camera);
+	rt_check_light_range(list->light);
+	rt_check_sphere_range(list->sphere);
+	rt_check_plane_range(list->plane);
+	rt_check_cylinder_range(list->cylinder);
+	return (SUCCESS);
+}
+
+int	rt_check_ambient_range(t_ambient ambient)
+{
+	if (ambient.ratio < 0.0 || 1.0 < ambient.ratio)
+		rt_error_msg("ambient lighting ratio range error!", 1);
+	if (ambient.color.red < 0 || 255 < ambient.color.red)
+		rt_error_msg("ambient color red range error!", 1);
+	if (ambient.color.green < 0 || 255 < ambient.color.green)
+		rt_error_msg("ambient color green range error!", 1);
+	if (ambient.color.blue < 0 || 255 < ambient.color.blue)
+		rt_error_msg("ambient color blue range error!", 1);
+	return (SUCCESS);
+}
+
+int	rt_check_camera_range(t_camera camera)
+{
+	if (camera.fov < 0.0 || 180.0 < camera.fov)
+		rt_error_msg("camera fov range error!", 1);
+	if (camera.vec.x < 0.0 || 1.0 < camera.vec.x)
+		rt_error_msg("camera vec x range error!", 1);
+	if (camera.vec.y < 0.0 || 1.0 < camera.vec.y)
+		rt_error_msg("camera vec y range error!", 1);
+	if (camera.vec.z < 0.0 || 1.0 < camera.vec.z)
+		rt_error_msg("camera vec z range error!", 1);
+	return (SUCCESS);
+}
+
+int	rt_check_light_range(t_light light)
+{
+	if (light.ratio < 0.0 || 1.0 < light.ratio)
+		rt_error_msg("light brightness ratio range error!", 1);
+	if (light.color.red < 0 || 255 < light.color.red)
+		rt_error_msg("light color red range error!", 1);
+	if (light.color.green < 0 || 255 < light.color.green)
+		rt_error_msg("light color green range error!", 1);
+	if (light.color.blue < 0 || 255 < light.color.blue)
+		rt_error_msg("light color blue range error!", 1);
+	return (SUCCESS);
+}
+
+int	rt_check_sphere_range(t_sphere *sphere)
+{
+	while (sphere)
+	{
+		if (sphere->color.red < 0 || 255 < sphere->color.red)
+			rt_error_msg("sphere color red range error!", 1);
+		if (sphere->color.green < 0 || 255 < sphere->color.green)
+			rt_error_msg("sphere color green range error!", 1);
+		if (sphere->color.blue < 0 || 255 < sphere->color.blue)
+			rt_error_msg("sphere color blue range error!", 1);
+		sphere = sphere->next;
+	}
+	return (SUCCESS);
+}
+
+int	rt_check_plane_range(t_plane *plane)
+{
+	while (plane)
+	{
+		if (plane->vec.x < 0.0 || 1.0 < plane->vec.x)
+			rt_error_msg("plane vec x range error!", 1);
+		if (plane->vec.y < 0.0 || 1.0 < plane->vec.y)
+			rt_error_msg("plane vec y range error!", 1);
+		if (plane->vec.z < 0.0 || 1.0 < plane->vec.z)
+			rt_error_msg("plane vec z range error!", 1);
+		if (plane->color.red < 0 || 255 < plane->color.red)
+			rt_error_msg("plane color red range error!", 1);
+		if (plane->color.green < 0 || 255 < plane->color.green)
+			rt_error_msg("plane color green range error!", 1);
+		if (plane->color.blue < 0 || 255 < plane->color.blue)
+			rt_error_msg("plane color blue range error!", 1);
+		plane = plane->next;
+	}
+	return (SUCCESS);
+}
+
+int	rt_check_cylinder_range(t_cylinder *cylinder)
+{
+	while (cylinder)
+	{
+		if (cylinder->vec.x < 0.0 || 1.0 < cylinder->vec.x)
+			rt_error_msg("cylinder vec x range error!", 1);
+		if (cylinder->vec.y < 0.0 || 1.0 < cylinder->vec.y)
+			rt_error_msg("cylinder vec y range error!", 1);
+		if (cylinder->vec.z < 0.0 || 1.0 < cylinder->vec.z)
+			rt_error_msg("cylinder vec z range error!", 1);
+		if (cylinder->color.red < 0 || 255 < cylinder->color.red)
+			rt_error_msg("cylinder color red range error!", 1);
+		if (cylinder->color.green < 0 || 255 < cylinder->color.green)
+			rt_error_msg("cylinder color green range error!", 1);
+		if (cylinder->color.blue < 0 || 255 < cylinder->color.blue)
+			rt_error_msg("cylinder color blue range error!", 1);
+		cylinder = cylinder->next;
+	}
 	return (SUCCESS);
 }
 
@@ -712,7 +820,7 @@ int	rt_error_msg(char *s, int status)
 
 int	rt_print_list_data(t_minirt *list)
 {
-	printf("----------    test init    ----------\n");
+	printf("----------    t_minirt list printer init    ----------\n");
 	printf("ambient\t[%f] [%d,%d,%d]\n", list->ambient.ratio, \
 	list->ambient.color.red, \
 	list->ambient.color.green, \
@@ -728,7 +836,7 @@ int	rt_print_list_data(t_minirt *list)
 	rt_print_plane_list_data(list, (void *)0);
 	rt_print_sphere_list_data(list, (void *)0);
 	rt_print_cylinder_list_data(list, (void *)0);
-	printf("----------    test over    ----------\n");
+	printf("----------    t_minirt list printer over    ----------\n");
 	return (SUCCESS);
 }
 
@@ -805,6 +913,7 @@ int	rt_end(t_mlxlist *list)
 
 int	rt_set_mlx(t_mlxlist *mlx)
 {
+	ft_memset(mlx, 0, sizeof(t_mlxlist));
 	mlx->mlx = mlx_init();
 	mlx->img = mlx_new_image(mlx->mlx, WIDTH, HEIGHT);
 	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bpp, \

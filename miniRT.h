@@ -46,6 +46,7 @@ typedef struct s_point
 
 typedef struct s_color
 {
+	int	tr;
 	int	red;
 	int	blue;
 	int	green;
