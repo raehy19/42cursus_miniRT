@@ -25,6 +25,7 @@ LIBFT_DIR := libft
 PARSE_DIR = rt_parse/
 MLX_DIR = rt_mlx/
 UTILS_DIR = rt_utils/
+SIMUL_DIR = rt_simulation/
 
 SRCS := \
 	miniRT.c \
@@ -50,6 +51,9 @@ UTILS_SRCS :=	 \
 	rt_error.c \
 	rt_print.c \
 
+SIMUL_SRCS :=	 \
+	rt_ambient.c
+
 all : $(NAME)
 
 OBJS := \
@@ -57,12 +61,14 @@ OBJS := \
 	$(addprefix $(PARSE_DIR), $(PARSE_SRCS:.c=.o)) \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS:.c=.o)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS:.c=.o)) \
+	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS:.c=.o)) \
 
 DEPS := \
 	$(SRCS:%.c=%.d) \
 	$(addprefix $(PARSE_DIR), $(PARSE_SRCS:.c=.d)) \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS:.c=.d)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS:.c=.d)) \
+	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS:.c=.d)) \
 
 -include $(DEPS) $(BONUS_DEPS)
 

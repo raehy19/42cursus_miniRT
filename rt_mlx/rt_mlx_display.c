@@ -36,6 +36,7 @@ int	rt_get_img(t_mlxlist *mlx, t_minirt *list)
 		j = 0;
 		while (j < WIDTH)
 		{
+			color = 0;
 			if (rt_get_pixel_color(list, j, i, &color) == FAIL)
 				return (rt_error_msg("something wrong in simulation", 1));
 			rt_mlx_pixel_put(mlx, j, i, color);
@@ -52,10 +53,7 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 
 	tmp = list;
 	a = b;
-	*color = ((list->ambient.color.tr << 24) + \
-		((int)(list->ambient.color.red * list->ambient.ratio) << 16) + \
-		((int)(list->ambient.color.green * list->ambient.ratio) << 8) + \
-		((int)(list->ambient.color.blue * list->ambient.ratio)));
+	rt_ambient_light(&list->ambient, color);
 	return (SUCCESS);
 }
 

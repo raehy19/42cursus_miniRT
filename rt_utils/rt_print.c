@@ -19,7 +19,7 @@ int	rt_print_list_data(t_minirt *list)
 	list->ambient.color.red, \
 	list->ambient.color.green, \
 	list->ambient.color.blue);
-	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%f]\n", \
+	printf("camera\t[%f,%f,%f] [%f,%f,%f] [%d]\n", \
 	list->camera.loc.x, list->camera.loc.y, list->camera.loc.z, \
 	list->camera.vec.x, list->camera.vec.y, list->camera.vec.z, \
 	list->camera.fov);
