@@ -53,7 +53,7 @@ int	rt_is_identifier(char *line, char *identifier, int len)
 
 int	rt_set_ambient_lightning(char *line, t_minirt *list)
 {
-	int			i;
+	int	i;
 
 	if (list->count[AMBIENT] != 0)
 		rt_error_msg("just one ambient lightning is required!", 1);
@@ -71,7 +71,7 @@ int	rt_set_ambient_lightning(char *line, t_minirt *list)
 
 int	rt_set_camera(char *line, t_minirt *list)
 {
-	int			i;
+	int	i;
 
 	if (list->count[CAMERA] != 0)
 		rt_error_msg("just one camera is required!", 1);
@@ -84,14 +84,14 @@ int	rt_set_camera(char *line, t_minirt *list)
 		return (rt_error_msg("syntax error on line C's location", 1));
 	if (rt_set_point(line, &i, &list->camera.vec))
 		return (rt_error_msg("syntax error on line C's Vector", 1));
-	if (rt_set_float(line, &i, &list->camera.fov))
+	if (rt_set_int(line, &i, &list->camera.fov))
 		return (rt_error_msg("syntax error on line C's fov", 1));
 	return (SUCCESS);
 }
 
 int	rt_set_light(char *line, t_minirt *list)
 {
-	int			i;
+	int	i;
 
 	if (list->count[LIGHT] != 0)
 		rt_error_msg("just one light is required!", 1);

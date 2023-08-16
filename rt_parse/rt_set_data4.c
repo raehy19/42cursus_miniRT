@@ -34,7 +34,7 @@ int	rt_try_atoi(char *line, int *i, int *j, int *res)
 	return (SUCCESS);
 }
 
-int	rt_try_atof(char *line, int *i, int *j, float *res)
+int	rt_try_atof(char *line, int *i, int *j, double *res)
 {
 	int		k;
 	int		m;
@@ -71,7 +71,7 @@ int	rt_check_minus(char c, int *k, int *m)
 	return (SUCCESS);
 }
 
-int	rt_try_atof_before_dot(char *line, int *k, float *res)
+int	rt_try_atof_before_dot(char *line, int *k, double *res)
 {
 	while (line[*k] != 0)
 	{
@@ -86,7 +86,7 @@ int	rt_try_atof_before_dot(char *line, int *k, float *res)
 	return (SUCCESS);
 }
 
-int	rt_try_atof_after_dot(char *line, int *k, float *res, float _res)
+int	rt_try_atof_after_dot(char *line, int *k, double *res, double _res)
 {
 	int	last;
 	int	i;

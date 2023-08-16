@@ -12,10 +12,25 @@
 
 #include "../miniRT.h"
 
-int	rt_set_float(char *line, int *i, float *tmp)
+int	rt_set_int(char *line, int *i, int *tmp)
+{
+	int	j;
+	int	res;
+
+	while (line[*i] != '\0' && rt_is_strchr(" \t", line[*i]))
+		*i += 1;
+	j = 0;
+	if (rt_try_atoi(line, i, &j, &res))
+		return (FAIL);
+	*tmp = res;
+	*i = *i + j;
+	return (SUCCESS);
+}
+
+int	rt_set_float(char *line, int *i, double *tmp)
 {
 	int		j;
-	float	res;
+	double	res;
 
 	while (line[*i] != '\0' && rt_is_strchr(" \t", line[*i]))
 		*i += 1;
@@ -30,7 +45,7 @@ int	rt_set_float(char *line, int *i, float *tmp)
 int	rt_set_point(char *line, int *i, t_point *tmp)
 {
 	int		j;
-	float	res;
+	double	res;
 
 	while (line[*i] != '\0' && rt_is_strchr(" \t", line[*i]))
 		*i += 1;

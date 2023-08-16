@@ -49,14 +49,13 @@ int	rt_get_img(t_mlxlist *mlx, t_minirt *list)
 int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 {
 	t_minirt	*tmp;
-	
+
 	tmp = list;
 	a = b;
 	*color = ((list->ambient.color.tr << 24) + \
-		(list->ambient.color.red << 16) + \
-		(list->ambient.color.green << 8) + \
-		(list->ambient.color.blue)) * \
-		list->ambient.ratio;
+		((int)(list->ambient.color.red * list->ambient.ratio) << 16) + \
+		((int)(list->ambient.color.green * list->ambient.ratio) << 8) + \
+		((int)(list->ambient.color.blue * list->ambient.ratio)));
 	return (SUCCESS);
 }
 

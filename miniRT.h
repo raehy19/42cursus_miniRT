@@ -39,9 +39,9 @@
 
 typedef struct s_point
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }			t_point;
 
 typedef struct s_color
@@ -54,7 +54,7 @@ typedef struct s_color
 
 typedef struct s_ambient
 {
-	float	ratio;
+	double	ratio;
 	t_color	color;
 }			t_ambient;
 
@@ -62,13 +62,13 @@ typedef struct s_camera
 {
 	t_point	loc;
 	t_point	vec;
-	float	fov;
+	int		fov;
 }			t_camera;
 
 typedef struct s_light
 {
 	t_point	loc;
-	float	ratio;
+	double	ratio;
 	t_color	color;
 }			t_light;
 
@@ -83,7 +83,7 @@ typedef struct s_plane
 typedef struct s_sphere
 {
 	t_point			loc;
-	float			diameter;
+	double			diameter;
 	t_color			color;
 	struct s_sphere	*next;
 }					t_sphere;
@@ -92,8 +92,8 @@ typedef struct s_cylinder
 {
 	t_point				loc;
 	t_point				vec;
-	float				diameter;
-	float				height;
+	double				diameter;
+	double				height;
 	t_color				color;
 	struct s_cylinder	*next;
 }						t_cylinder;
@@ -145,15 +145,16 @@ int		rt_set_plain(char *line, t_minirt *list);
 int		rt_set_sphere(char *line, t_minirt *list);
 int		rt_set_cylinder(char *line, t_minirt *list);
 // rt_set_data3.c
-int		rt_set_float(char *line, int *i, float *tmp);
+int		rt_set_int(char *line, int *i, int *tmp);
+int		rt_set_float(char *line, int *i, double *tmp);
 int		rt_set_point(char *line, int *i, t_point *tmp);
 int		rt_set_color(char *line, int *i, t_color *tmp);
 // rt_set_data4.c
 int		rt_try_atoi(char *line, int *i, int *j, int *res);
-int		rt_try_atof(char *line, int *i, int *j, float *res);
+int		rt_try_atof(char *line, int *i, int *j, double *res);
 int		rt_check_minus(char c, int *k, int *m);
-int		rt_try_atof_before_dot(char *line, int *k, float *res);
-int		rt_try_atof_after_dot(char *line, int *k, float *res, float _res);
+int		rt_try_atof_before_dot(char *line, int *k, double *res);
+int		rt_try_atof_after_dot(char *line, int *k, double *res, double _res);
 // rt_set_data5.c
 int		rt_add_plane_node(t_minirt *list, t_plane *new);
 int		rt_add_sphere_node(t_minirt *list, t_sphere *new);
