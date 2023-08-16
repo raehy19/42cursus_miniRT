@@ -69,4 +69,7 @@ re :
 test : $(NAME)
 	./test.sh
 
+norm : $(SRCS)
+	norminette $^
+
 .PHONY: all clean fclean re
