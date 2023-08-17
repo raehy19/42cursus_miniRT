@@ -12,11 +12,25 @@
 
 #include "../miniRT.h"
 
-int	rt_ambient_light(t_ambient *ambient, int *color)
+int	rt_add_ambient_light(t_ambient *ambient, int *color, t_color tmp)
 {
-	*color += ((ambient->color.tr << 24) + \
-		((int)(ambient->color.red * ambient->ratio) << 16) + \
-		((int)(ambient->color.green * ambient->ratio) << 8) + \
-		((int)(ambient->color.blue * ambient->ratio)));
+	tmp.tr = 0;
+	tmp.red += (int)(ambient->color.red * ambient->ratio);
+	tmp.green += (int)(ambient->color.green * ambient->ratio);
+	tmp.blue += (int)(ambient->color.blue * ambient->ratio);
+	if (tmp.red < 0)
+		tmp.red = 0;
+	if (255 < tmp.red)
+		tmp.red = 255;
+	if (tmp.green < 0)
+		tmp.green = 0;
+	if (255 < tmp.green)
+		tmp.green = 255;
+	if (tmp.blue < 0)
+		tmp.blue = 0;
+	if (255 < tmp.blue)
+		tmp.blue = 255;
+	*color += ((ambient->color.tr << 24) + (tmp.red << 16) + \
+		(tmp.green << 8) + (tmp.blue));
 	return (SUCCESS);
 }

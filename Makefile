@@ -52,7 +52,8 @@ UTILS_SRCS :=	 \
 	rt_print.c \
 
 SIMUL_SRCS :=	 \
-	rt_ambient.c
+	rt_ambient.c \
+	rt_diffuse.c \
 
 all : $(NAME)
 
@@ -97,7 +98,11 @@ re :
 test : $(NAME)
 	./test.sh
 
-norm : $(SRCS)
-	norminette $^
+norm :
+	norminette $(SRCS) \
+	$(addprefix $(PARSE_DIR), $(PARSE_SRCS)) \
+	$(addprefix $(MLX_DIR), $(MLX_SRCS)) \
+	$(addprefix $(UTILS_DIR), $(UTILS_SRCS)) \
+	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS)) \
 
 .PHONY: all clean fclean re

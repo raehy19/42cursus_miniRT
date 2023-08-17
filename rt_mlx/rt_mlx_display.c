@@ -50,10 +50,12 @@ int	rt_get_img(t_mlxlist *mlx, t_minirt *list)
 int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 {
 	t_minirt	*tmp;
+	t_color		tmpcolor;
 
 	tmp = list;
+	ft_memset(&tmpcolor, 0, sizeof(t_color));
 	a = b;
-	rt_ambient_light(&list->ambient, color);
+	rt_add_ambient_light(&list->ambient, color, tmpcolor);
 	return (SUCCESS);
 }
 

@@ -190,6 +190,7 @@ int		rt_get_pixel_color(t_minirt *list, int a, int b, int *color);
 int		rt_display_mlx(t_mlxlist *mlx, char *name);
 void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
 // rt_ambient.c
-int		rt_ambient_light(t_ambient *ambient, int *color);
+int		rt_add_ambient_light(t_ambient *ambient, int *color, t_color tmp);
+// rt_diffuse.c
 
 #endif
