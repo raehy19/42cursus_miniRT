@@ -54,6 +54,7 @@ UTILS_SRCS :=	 \
 SIMUL_SRCS :=	 \
 	rt_ambient.c \
 	rt_diffuse.c \
+	rt_simulation_utils.c \
 
 all : $(NAME)
 

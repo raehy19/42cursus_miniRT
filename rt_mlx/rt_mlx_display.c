@@ -49,13 +49,16 @@ int	rt_get_img(t_mlxlist *mlx, t_minirt *list)
 
 int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 {
-	t_minirt	*tmp;
+	int			flag;
 	t_color		tmpcolor;
 
-	tmp = list;
+	flag = 0;
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
-	a = b;
-	rt_add_ambient_light(&list->ambient, color, tmpcolor);
+	flag = a + b > 500 && a + b < 1000;
+	if (flag)
+		rt_add_ambient_light(&list->ambient, color, tmpcolor);
+	else
+		rt_add_light_color(tmpcolor, color);
 	return (SUCCESS);
 }
 
