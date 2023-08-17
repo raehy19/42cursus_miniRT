@@ -1,26 +1,83 @@
+echo "\n\nfile error test"
 	echo "test/qwer.rt"
 	./miniRT test/qwer.rt
-	echo "test/asdf.rt"
+	echo "\ntest/asdf.rt"
 	./miniRT test/asdf.rt
-	echo "test/test_AA.rt"
+	echo "\ntest/test_AA.rt"
 	./miniRT test/test_AA.rt
-	echo "test/test_CC.rt"
+	echo "\ntest/test_CC.rt"
 	./miniRT test/test_CC.rt
-	echo "test/test_LL.rt"
+	echo "\ntest/test_LL.rt"
 	./miniRT test/test_LL.rt
-	echo "test/testA.rt"
+	echo "\ntest/testA.rt"
 	./miniRT test/testA.rt
-	echo "test/testC.rt"
+	echo "\ntest/testC.rt"
 	./miniRT test/testC.rt
-	echo "test/testL.rt"
+	echo "\ntest/testL.rt"
 	./miniRT test/testL.rt
-	echo "test/test_none.rt"
+	echo "\ntest/test_none.rt"
 	./miniRT test/test_none.rt
-	echo "test/test.rt"
-	./miniRT test/test.rt
-	echo "test/testAw.rt"
+	echo "\ntest/testAw.rt"
 	./miniRT test/testAw.rt
-	echo "test/testCw.rt"
+	echo "\ntest/testCw.rt"
 	./miniRT test/testCw.rt
-	echo "test/testLw.rt"
+	echo "\ntest/testLw.rt"
 	./miniRT test/testLw.rt
+echo "\n\nvalue error test"
+	echo "\ntest/valerr0.rt"
+	./miniRT test/valerr0.rt
+	echo "\ntest/valerr1.rt"
+	./miniRT test/valerr1.rt
+	echo "\ntest/valerr2.rt"
+	./miniRT test/valerr2.rt
+	echo "\ntest/valerr3.rt"
+	./miniRT test/valerr3.rt
+	echo "\ntest/valerr4.rt"
+	./miniRT test/valerr4.rt
+	echo "\ntest/valerr5.rt"
+	./miniRT test/valerr5.rt
+	echo "\ntest/valerr6.rt"
+	./miniRT test/valerr6.rt
+	echo "\ntest/valerr7.rt"
+	./miniRT test/valerr7.rt
+	echo "\ntest/valerr8.rt"
+	./miniRT test/valerr8.rt
+	echo "\ntest/valerr9.rt"
+	./miniRT test/valerr9.rt
+	echo "\ntest/valerr10.rt"
+	./miniRT test/valerr10.rt
+	echo "\ntest/valerr11.rt"
+	./miniRT test/valerr11.rt
+	echo "\ntest/valerr12.rt"
+	./miniRT test/valerr12.rt
+	echo "\ntest/valerr13.rt"
+	./miniRT test/valerr13.rt
+	echo "\ntest/valerr14.rt"
+	./miniRT test/valerr14.rt
+	echo "\ntest/valerr15.rt"
+	./miniRT test/valerr15.rt
+	echo "\ntest/valerr16.rt"
+	./miniRT test/valerr16.rt
+	echo "\ntest/valerr17.rt"
+	./miniRT test/valerr17.rt
+	echo "\ntest/valerr18.rt"
+	./miniRT test/valerr18.rt
+	echo "\ntest/valerr19.rt"
+	./miniRT test/valerr19.rt
+	echo "\ntest/valerr20.rt"
+	./miniRT test/valerr20.rt
+	echo "\ntest/valerr21.rt"
+	./miniRT test/valerr21.rt
+	echo "\ntest/valerr22.rt"
+	./miniRT test/valerr22.rt
+	echo "\ntest/valerr23.rt"
+	./miniRT test/valerr23.rt
+	echo "\ntest/valerr24.rt"
+	./miniRT test/valerr24.rt
+	echo "\ntest/valerr25.rt"
+	./miniRT test/valerr25.rt
+	echo "\ntest/valerr26.rt"
+	./miniRT test/valerr26.rt
+echo "\n\nnormal"
+	echo "\ntest/test.rt"
+	./miniRT test/test.rt
