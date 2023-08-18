@@ -22,6 +22,9 @@ RM := rm -f
 LIBFT := ./libft/libft.a
 LIBFT_DIR := libft
 
+MLX_LIB_NAME := libmlx.dylib
+MLX_LIB_DIR := mlx
+
 PARSE_DIR = rt_parse/
 MLX_DIR = rt_mlx/
 UTILS_DIR = rt_utils/
@@ -74,7 +77,7 @@ DEPS := \
 
 -include $(DEPS) $(BONUS_DEPS)
 
-$(NAME) : $(LIBFT) $(OBJS)
+$(NAME) : $(LIBFT) $(MLX_LIB_NAME) $(OBJS)
 	$(CC) $(CFLAG) $(MLX_FLAG) -l ft -L libft $^ -o $@
 
 %.o : %.c
@@ -83,13 +86,20 @@ $(NAME) : $(LIBFT) $(OBJS)
 $(LIBFT) :
 	make -C $(LIBFT_DIR) all
 
+$(MLX_LIB_NAME) :
+	make -C $(MLX_LIB_DIR) all
+	cp ./mlx/$(MLX_LIB_NAME) ./$(MLX_LIB_NAME)
+
+
 clean :
+	make -C $(MLX_LIB_DIR) clean
 	make -C $(LIBFT_DIR) clean
 	$(RM) $(OBJS)
 	$(RM) $(DEPS)
 
 fclean : clean
 	$(RM) $(LIBFT)
+	$(RM) $(MLX_LIB_NAME)
 	$(RM) $(RMFLAG) $(NAME)
 
 re :
