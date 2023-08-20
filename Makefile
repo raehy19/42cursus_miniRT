@@ -27,6 +27,7 @@ MLX_LIB_DIR := mlx
 
 PARSE_DIR = rt_parse/
 MLX_DIR = rt_mlx/
+CALCULATE_DIR = rt_calculate/
 UTILS_DIR = rt_utils/
 SIMUL_DIR = rt_simulation/
 
@@ -45,16 +46,19 @@ PARSE_SRCS := \
 	rt_set_data4.c \
 	rt_set_data5.c \
 
+CALCULATE_SRCS := \
+	rt_calculate1.c \
+
 MLX_SRCS := \
 	rt_mlx_display.c \
 	rt_mlx_func.c \
 
-UTILS_SRCS :=	 \
+UTILS_SRCS := \
 	rt_clear_data.c \
 	rt_error.c \
 	rt_print.c \
 
-SIMUL_SRCS :=	 \
+SIMUL_SRCS := \
 	rt_ambient.c \
 	rt_diffuse.c \
 	rt_simulation_utils.c \
@@ -65,6 +69,7 @@ OBJS := \
 	$(SRCS:%.c=%.o) \
 	$(addprefix $(PARSE_DIR), $(PARSE_SRCS:.c=.o)) \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS:.c=.o)) \
+	$(addprefix $(CALCULATE_DIR), $(CALCULATE_SRCS:.c=.o)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS:.c=.o)) \
 	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS:.c=.o)) \
 
@@ -72,6 +77,7 @@ DEPS := \
 	$(SRCS:%.c=%.d) \
 	$(addprefix $(PARSE_DIR), $(PARSE_SRCS:.c=.d)) \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS:.c=.d)) \
+	$(addprefix $(CALCULATE_DIR), $(CALCULATE_SRCS:.c=.d)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS:.c=.d)) \
 	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS:.c=.d)) \
 
@@ -113,6 +119,7 @@ norm :
 	norminette $(SRCS) \
 	$(addprefix $(PARSE_DIR), $(PARSE_SRCS)) \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS)) \
+	$(addprefix $(CALCULATE_DIR), $(CALCULATE_SRCS)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS)) \
 	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS)) \
 

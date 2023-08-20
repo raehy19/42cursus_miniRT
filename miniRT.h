@@ -37,6 +37,13 @@
 # define HEIGHT 800
 # define WIDTH 1000
 
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+	double	z;
+}			t_vector;
+
 typedef struct s_point
 {
 	double	x;
