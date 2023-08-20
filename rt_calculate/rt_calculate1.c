@@ -35,3 +35,20 @@ t_point	normalize_vec(t_point a)
 	}
 	return (a);
 }
+
+t_point	cal_ray(int *x, int *y, t_point const *camera)
+{
+	t_point	outer_product;
+	t_point	z;
+
+	z = (t_point) {0,0,1};
+	outer_product = cal_outer_product(camera, &z);
+	if (outer_product.x == 0 && outer_product.y == 0)
+	{
+		;
+	}
+	else
+	{
+		;
+	}
+}
