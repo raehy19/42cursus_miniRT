@@ -34,15 +34,8 @@
 # define SPHERE 4
 # define CYLINDER 5
 
-# define HEIGHT 800
-# define WIDTH 1000
-
-typedef struct s_vector
-{
-	double	x;
-	double	y;
-	double	z;
-}			t_vector;
+# define HEIGHT 800.0
+# define WIDTH 1000.0
 
 typedef struct s_point
 {
@@ -127,6 +120,7 @@ typedef struct s_mlxlist
 	int			endian;
 }				t_mlxlist;
 
+// rt_parse/
 // rt_read_file.c
 void	rt_init(int ac, char **av, t_minirt *list);
 void	rt_check_arg(int ac, char **av);
@@ -175,6 +169,8 @@ int		rt_check_light_range(t_light light);
 int		rt_check_sphere_range(t_sphere *sphere);
 int		rt_check_plane_range(t_plane *plane);
 int		rt_check_cylinder_range(t_cylinder *cylinder);
+
+// rt_utils/
 // rt_clear_data.c
 int		rt_clear_data(t_minirt *list);
 int		rt_clear_plane_node(t_minirt *list, t_plane *tmpp);
@@ -187,6 +183,8 @@ int		rt_print_list_data(t_minirt *list);
 int		rt_print_plane_list_data(t_minirt *list, t_plane *tmpp);
 int		rt_print_sphere_list_data(t_minirt *list, t_sphere *tmps);
 int		rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
+
+// rt_mlx/
 // rt_mlx_func.c
 int		rt_keyhook(int k, t_mlxlist *list);
 int		rt_end(t_mlxlist *list);
@@ -196,10 +194,17 @@ int		rt_get_img(t_mlxlist *mlx, t_minirt *list);
 int		rt_get_pixel_color(t_minirt *list, int a, int b, int *color);
 int		rt_display_mlx(t_mlxlist *mlx, char *name);
 void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
+
+// rt_simulation/
 // rt_ambient.c
 int		rt_add_ambient_light(t_ambient *ambient, int *color, t_color tmp);
 // rt_diffuse.c
+
 // rt_simulation_utils.c
 int		rt_add_light_color(t_color tmp, int *color);
+
+// rt_calculate
+// rt_calculate1.c
+t_point	cal_ray(int *x, int *y, t_camera const *camera);
 
 #endif

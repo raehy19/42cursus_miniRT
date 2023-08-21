@@ -67,13 +67,24 @@ t_point	cal_ray(int *x, int *y, t_camera const *camera)
 	outer_prod = normalize_vec(cal_outer_prod(&camera->vec, &z));
 	if (outer_prod.x == 0 && outer_prod.y == 0 && outer_prod.z == 0)
 		outer_prod.x = 1;
-	theta = (camera->fov / 2) * (double)(*x - (WIDTH / 2)) / (WIDTH / 2)
+	theta = (camera->fov / 2) * (*x - (WIDTH / 2)) / (WIDTH / 2)
 		* M_PI / 180;
 	ret = add_vec(multiply_vec(cos(theta), camera->vec),
 			multiply_vec(sin(theta), outer_prod));
 	outer_prod = normalize_vec(cal_outer_prod(&camera->vec, &outer_prod));
+	if (*x % 20 == 0 && *y % 20 == 0)
+	{
+		printf(" / theta width : %lf / ", theta);
+		printf(" / outer product : %lf %lf %lf / ", outer_prod.x, outer_prod.y, outer_prod.z);
+	}
 	theta = (camera->fov / 2 * (HEIGHT / WIDTH))
-		* (double)(*y - (HEIGHT / 2)) / (HEIGHT / 2) * M_PI / 180;
-	ret = add_vec(ret, multiply_vec(sin(theta), outer_prod));
+		* ((HEIGHT / 2) - *y) / (HEIGHT / 2) * M_PI / 180;
+	if (*x % 20 == 0 && *y % 20 == 0)
+	{
+		printf(" / theta height : %lf / ", theta);
+		printf(" / outer product : %lf %lf %lf / ", outer_prod.x, outer_prod.y, outer_prod.z);
+	}
+	ret = add_vec(multiply_vec(cos(theta), ret),
+			multiply_vec(sin(theta), outer_prod));
 	return (ret);
 }
