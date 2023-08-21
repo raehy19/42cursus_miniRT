@@ -12,7 +12,7 @@
 
 #include "../miniRT.h"
 
-t_point	cal_outer_product(t_point const *a, t_point const *b)
+t_point	cal_outer_prod(t_point const *a, t_point const *b)
 {
 	t_point	ret;
 
@@ -36,19 +36,44 @@ t_point	normalize_vec(t_point a)
 	return (a);
 }
 
-t_point	cal_ray(int *x, int *y, t_point const *camera)
+t_point	add_vec(t_point const a, t_point const b)
 {
-	t_point	outer_product;
-	t_point	z;
+	t_point	ret;
 
-	z = (t_point) {0,0,1};
-	outer_product = cal_outer_product(camera, &z);
-	if (outer_product.x == 0 && outer_product.y == 0)
-	{
-		;
-	}
-	else
-	{
-		;
-	}
+	ret.x = a.x + b.x;
+	ret.y = a.y + b.y;
+	ret.z = a.z + b.z;
+	return (ret);
+}
+
+t_point	multiply_vec(double const mul, t_point const vec)
+{
+	t_point	ret;
+
+	ret.x = vec.x * mul;
+	ret.y = vec.y * mul;
+	ret.z = vec.z * mul;
+	return (ret);
+}
+
+t_point	cal_ray(int *x, int *y, t_camera const *camera)
+{
+	t_point	ret;
+	t_point	outer_prod;
+	t_point	z;
+	double	theta;
+
+	z = (t_point){0, 0, 1};
+	outer_prod = normalize_vec(cal_outer_prod(&camera->vec, &z));
+	if (outer_prod.x == 0 && outer_prod.y == 0 && outer_prod.z == 0)
+		outer_prod.x = 1;
+	theta = (camera->fov / 2) * (double)(*x - (WIDTH / 2)) / (WIDTH / 2)
+		* M_PI / 180;
+	ret = add_vec(multiply_vec(cos(theta), camera->vec),
+			multiply_vec(sin(theta), outer_prod));
+	outer_prod = normalize_vec(cal_outer_prod(&camera->vec, &outer_prod));
+	theta = (camera->fov / 2 * (HEIGHT / WIDTH))
+		* (double)(*y - (HEIGHT / 2)) / (HEIGHT / 2) * M_PI / 180;
+	ret = add_vec(ret, multiply_vec(sin(theta), outer_prod));
+	return (ret);
 }
