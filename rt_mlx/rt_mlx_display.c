@@ -54,7 +54,7 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 	t_ray		ray;
 	t_ray		hit_point;
 
-	ray.start = list->camera.loc;
+	ray.loc = list->camera.loc;
 	ray.vec = cal_ray(&a, &b, &list->camera);
 	if (a % 20 == 0 && b % 20 == 0)
 		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray.vec.x, ray.vec.y, ray.vec.z);

@@ -55,7 +55,7 @@ typedef struct s_point
 
 typedef struct s_ray
 {
-	t_point	start;
+	t_point	loc;
 	t_point	vec;
 }			t_ray;
 
