@@ -57,7 +57,6 @@ UTILS_SRCS := \
 	rt_clear_data.c \
 	rt_error.c \
 	rt_print.c \
-	rt_controll_ambiguous_data.c \
 	rt_rotate_vector.c \
 
 SIMUL_SRCS := \
