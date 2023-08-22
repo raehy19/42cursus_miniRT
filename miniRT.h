@@ -189,9 +189,6 @@ int		rt_print_list_data(t_minirt *list);
 int		rt_print_plane_list_data(t_minirt *list, t_plane *tmpp);
 int		rt_print_sphere_list_data(t_minirt *list, t_sphere *tmps);
 int		rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
-// rt_controll_ambiguous_data.c
-int		rt_controll_ambiguous_data(t_minirt *list);
-int		rt_controll_ambiguous_cam_vec(t_minirt *list);
 // rt_rotate_vector.c
 t_point	rt_rotate_x(t_point tmp, double theta);
 t_point	rt_rotate_y(t_point tmp, double theta);
