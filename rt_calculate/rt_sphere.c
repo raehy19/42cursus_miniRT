@@ -64,21 +64,27 @@ int	cal_equation(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
 
 int	cal_sphere(t_sphere const *s_list, t_ray *cam, t_ray *hit_point)
 {
-//	t_ray	ret;
+	int		flag;
 	t_ray	temp;
 
-
+	flag = 0;
 	while (s_list)
 	{
-//		printf("sphere : %lf %lf %lf %lf\n",s_list->loc.x, s_list->loc.y, s_list->loc.z, s_list->diameter);
-//		printf("cam vec : %lf %lf %lf\ncam loc: %lf %lf %lf\n", cam->vec.x, cam->vec.y, cam->vec.z, cam->start.x, cam->start.y, cam->start.z);
-
 		if (cal_equation(s_list, cam, &temp))
 		{
-			*hit_point = temp;
-			return (1);
+			if (flag == 0)
+			{
+				*hit_point = temp;
+				flag = 1;
+			}
+			else
+			{
+				if (cal_distance(hit_point->loc, cam->loc)
+					> cal_distance(temp.loc, cam->loc))
+					*hit_point = temp;
+			}
 		}
 		s_list = s_list->next;
 	}
-	return (0);
+	return (flag);
 }
