@@ -192,7 +192,10 @@ int		rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
 // rt_controll_ambiguous_data.c
 int		rt_controll_ambiguous_data(t_minirt *list);
 int		rt_controll_ambiguous_cam_vec(t_minirt *list);
-t_point	rt_rotate_x90(t_point tmp);
+// rt_rotate_vector.c
+t_point	rt_rotate_x(t_point tmp, double theta);
+t_point	rt_rotate_y(t_point tmp, double theta);
+t_point	rt_rotate_z(t_point tmp, double theta);
 
 // rt_mlx/
 // rt_mlx_func.c

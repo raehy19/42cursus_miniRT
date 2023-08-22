@@ -58,11 +58,18 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 	if (a % 20 == 0 && b % 20 == 0)
 		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray.vec.x, ray.vec.y, ray.vec.z);
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
-	flag = a + b > 500 && a + b < 1000;
+	flag = ray.vec.x * ray.vec.y * ray.vec.z < 0;
 	if (flag)
 		rt_add_ambient_light(&list->ambient, color, tmpcolor);
 	else
 		rt_add_light_color(tmpcolor, color);
+	*color = 0x00000000;
+	if (ray.vec.x > 0)
+		*color += 0x00ff0000;
+	if (ray.vec.y > 0)
+		*color += 0x0000ff00;
+	if (ray.vec.z > 0)
+		*color += 0x000000ff;
 	return (SUCCESS);
 }
 

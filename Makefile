@@ -15,7 +15,7 @@ NAME := miniRT
 CC := cc
 
 CFLAG := -Wall -Wextra -Werror -MMD -MP
-MLX_FLAG := -Lmlx -lmlx -framework OpenGL -framework AppKit
+MLX_FLAG :=  -lmlx -framework OpenGL -framework AppKit
 
 RM := rm -f
 
@@ -58,6 +58,7 @@ UTILS_SRCS := \
 	rt_error.c \
 	rt_print.c \
 	rt_controll_ambiguous_data.c \
+	rt_rotate_vector.c \
 
 SIMUL_SRCS := \
 	rt_ambient.c \

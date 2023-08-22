@@ -46,11 +46,11 @@ int	rt_check_camera_range(t_camera camera)
 {
 	if (camera.fov < 0.0 || 180.0 < camera.fov)
 		rt_error_msg("camera fov range error!", 1);
-	if (camera.vec.x < 0.0 || 1.0 < camera.vec.x)
+	if (camera.vec.x < -1.0 || 1.0 < camera.vec.x)
 		rt_error_msg("camera vec x range error!", 1);
-	if (camera.vec.y < 0.0 || 1.0 < camera.vec.y)
+	if (camera.vec.y < -1.0 || 1.0 < camera.vec.y)
 		rt_error_msg("camera vec y range error!", 1);
-	if (camera.vec.z < 0.0 || 1.0 < camera.vec.z)
+	if (camera.vec.z < -1.0 || 1.0 < camera.vec.z)
 		rt_error_msg("camera vec z range error!", 1);
 	return (SUCCESS);
 }
