@@ -37,6 +37,15 @@
 # define HEIGHT 800.0
 # define WIDTH 1000.0
 
+// quadratic equation coefficients
+typedef struct s_q_e_c
+{
+	double a;
+	double b;
+	double c;
+	double d;
+}			t_q_e_c;
+
 typedef struct s_point
 {
 	double	x;
@@ -214,7 +223,15 @@ int		rt_add_ambient_light(t_ambient *ambient, int *color, t_color tmp);
 int		rt_add_light_color(t_color tmp, int *color);
 
 // rt_calculate
-// rt_calculate1.c
+// rt_cal_cam_ray.c
 t_point	cal_ray(int *x, int *y, t_camera const *camera);
+// rt_cal_cam_utils.c
+t_point	cal_outer_prod(t_point const *a, t_point const *b);
+t_point	normalize_vec(t_point a);
+t_point	add_vec(t_point const a, t_point const b);
+t_point	multiply_vec(double const mul, t_point const vec);
+
+int	cal_sphere(t_sphere const *s_list, t_ray *cam, t_ray *hit_point);
+
 
 #endif

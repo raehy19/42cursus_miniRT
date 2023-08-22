@@ -52,24 +52,18 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 	int			flag;
 	t_color		tmpcolor;
 	t_ray		ray;
+	t_ray		hit_point;
 
 	ray.start = list->camera.loc;
 	ray.vec = cal_ray(&a, &b, &list->camera);
 	if (a % 20 == 0 && b % 20 == 0)
 		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray.vec.x, ray.vec.y, ray.vec.z);
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
-	flag = ray.vec.x * ray.vec.y * ray.vec.z < 0;
+	flag = cal_sphere(list->sphere, &ray, &hit_point);
 	if (flag)
 		rt_add_ambient_light(&list->ambient, color, tmpcolor);
 	else
 		rt_add_light_color(tmpcolor, color);
-	*color = 0x00000000;
-	if (ray.vec.x > 0)
-		*color += 0x00ff0000;
-	if (ray.vec.y > 0)
-		*color += 0x0000ff00;
-	if (ray.vec.z > 0)
-		*color += 0x000000ff;
 	return (SUCCESS);
 }
 
