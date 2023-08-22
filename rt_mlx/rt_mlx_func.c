@@ -24,5 +24,7 @@ int	rt_end(t_mlxlist *list)
 	printf("miniRT : good bye!\n");
 	mlx_destroy_window(list->mlx, list->win);
 	mlx_destroy_image(list->mlx, list->img);
+	system("leaks miniRT"); // we must remove this line before upload 42' repo
 	exit(0);
+	return (0);
 }

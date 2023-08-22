@@ -44,6 +44,12 @@ typedef struct s_point
 	double	z;
 }			t_point;
 
+typedef struct s_ray
+{
+	t_point	start;
+	t_point	vec;
+}			t_ray;
+
 typedef struct s_color
 {
 	int	tr;
@@ -183,6 +189,10 @@ int		rt_print_list_data(t_minirt *list);
 int		rt_print_plane_list_data(t_minirt *list, t_plane *tmpp);
 int		rt_print_sphere_list_data(t_minirt *list, t_sphere *tmps);
 int		rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc);
+// rt_controll_ambiguous_data.c
+int		rt_controll_ambiguous_data(t_minirt *list);
+int		rt_controll_ambiguous_cam_vec(t_minirt *list);
+t_point	rt_rotate_x90(t_point tmp);
 
 // rt_mlx/
 // rt_mlx_func.c

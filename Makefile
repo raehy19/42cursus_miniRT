@@ -57,6 +57,7 @@ UTILS_SRCS := \
 	rt_clear_data.c \
 	rt_error.c \
 	rt_print.c \
+	rt_controll_ambiguous_data.c \
 
 SIMUL_SRCS := \
 	rt_ambient.c \

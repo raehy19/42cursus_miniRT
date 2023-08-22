@@ -51,12 +51,12 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 {
 	int			flag;
 	t_color		tmpcolor;
-	t_point		ray_vec;
+	t_ray		ray;
 
-	ray_vec = cal_ray(&a, &b, &list->camera);
+	ray.start = list->camera.loc;
+	ray.vec = cal_ray(&a, &b, &list->camera);
 	if (a % 20 == 0 && b % 20 == 0)
-		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray_vec.x, ray_vec.y, ray_vec.z);
-	flag = 0;
+		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray.vec.x, ray.vec.y, ray.vec.z);
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
 	flag = a + b > 500 && a + b < 1000;
 	if (flag)
