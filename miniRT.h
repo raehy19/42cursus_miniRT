@@ -218,7 +218,8 @@ void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
 // rt_ambient.c
 int		rt_add_ambient_light(t_ambient *ambient, int *color, t_color tmp);
 // rt_diffuse.c
-
+t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj);
+double	rt_get_diffuse_light(t_light *l, t_ray hit);
 // rt_simulation_utils.c
 int		rt_add_light_color(t_color tmp, int *color);
 
