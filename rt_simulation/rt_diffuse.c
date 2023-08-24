@@ -24,18 +24,15 @@ t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj)
 	diffuse = rt_get_diffuse_light(l, hit);
 	if (diffuse > 0)
 	{
-		if (obj.red < l->color.red * l->ratio * diffuse)
-			tmp.red += (int)obj.red;
-		else
-			tmp.red += (int)(l->color.red * l->ratio * diffuse);
-		if (obj.green < l->color.green * l->ratio * diffuse)
-			tmp.green += (int)obj.green;
-		else
-			tmp.green += (int)(l->color.green * l->ratio * diffuse);
-		if (obj.blue < l->color.blue * l->ratio * diffuse)
-			tmp.blue += (int)obj.blue;
-		else
-			tmp.blue += (int)(l->color.blue * l->ratio * diffuse);
+		tmp.red = (int)(l->color.red * l->ratio * diffuse);
+		tmp.green = (int)(l->color.green * l->ratio * diffuse);
+		tmp.blue = (int)(l->color.blue * l->ratio * diffuse);
+		if (obj.red < tmp.red)
+			tmp.red = obj.red;
+		if (obj.green < tmp.green)
+			tmp.green = obj.green;
+		if (obj.blue < tmp.blue)
+			tmp.blue = obj.blue;
 	}
 	return (tmp);
 }
