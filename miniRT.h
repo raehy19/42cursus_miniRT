@@ -220,8 +220,12 @@ int		rt_add_ambient_light(t_ambient *amb, int *c, t_color tmp, t_color obj);
 // rt_diffuse.c
 t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj);
 double	rt_get_diffuse_light(t_light *l, t_ray hit);
+int		check_sphere(t_sphere const *list, t_ray *cam);
 // rt_simulation_utils.c
 int		rt_add_light_color(t_color tmp, int *color);
+t_ray	rt_get_point_to_light(t_ray obj, t_point light);
+t_point	rt_get_vec(t_point const a, t_point const b);
+double	rt_inner_prod(t_point const a, t_point const b);
 
 // rt_calculate
 // rt_cal_cam_ray.c

@@ -12,9 +12,6 @@
 
 #include "../miniRT.h"
 
-t_point	rt_get_vec(t_point const a, t_point const b);
-double	rt_inner_prod(t_point const a, t_point const b);
-
 t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj)
 {
 	t_color	tmp;
@@ -49,22 +46,4 @@ double	rt_get_diffuse_light(t_light *l, t_ray hit)
 	tmp2 = sqrt(pow(vec.x, 2) + pow(vec.y, 2) + pow(vec.z, 2));
 	diffuse = (rt_inner_prod(vec, hit.vec) / tmp1) / tmp2;
 	return (diffuse);
-}
-
-t_point	rt_get_vec(t_point const a, t_point const b)
-{
-	t_point	res;
-
-	res.x = a.x - b.x;
-	res.y = a.y - b.y;
-	res.z = a.z - b.z;
-	return (res);
-}
-
-double	rt_inner_prod(t_point const a, t_point const b)
-{
-	double	res;
-
-	res = (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
-	return (res);
 }

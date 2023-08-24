@@ -51,21 +51,21 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 {
 	int			hitflag[2];
 	t_color		tmpcolor;
-	t_ray		ray;
-	t_ray		hit_point;
+	t_ray		ray[3];
 	t_color		objcolor;
 
-	ray.loc = list->camera.loc;
-	ray.vec = cal_ray(&a, &b, &list->camera);
+	ray[0].loc = list->camera.loc;
+	ray[0].vec = cal_ray(&a, &b, &list->camera);
 	if (a % 20 == 0 && b % 20 == 0)
-		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray.vec.x, ray.vec.y, ray.vec.z);
+		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray[0].vec.x, ray[0].vec.y, ray[0].vec.z);
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
-	hitflag[0] = cal_sphere(list->sphere, &ray, &hit_point, &objcolor);
+	hitflag[0] = cal_sphere(list->sphere, &ray[0], &ray[1], &objcolor);
 	if (hitflag[0])
 	{
-		hitflag[1] = FALSE;
+		ray[2] = rt_get_point_to_light(ray[1], list->light.loc);
+		hitflag[1] = check_sphere(list->sphere, &ray[2]);
 		if (hitflag[1] == FALSE)
-			tmpcolor = rt_add_diffuse_light(&list->light, hit_point, objcolor);
+			tmpcolor = rt_add_diffuse_light(&list->light, ray[1], objcolor);
 		rt_add_ambient_light(&list->ambient, color, tmpcolor, objcolor);
 	}
 	else
