@@ -17,7 +17,7 @@ double	rt_inner_prod(t_point const a, t_point const b);
 
 t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj)
 {
-	t_color tmp;
+	t_color	tmp;
 	double	diffuse;
 
 	ft_memset(&tmp, 0, sizeof(t_color));

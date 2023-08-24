@@ -14,7 +14,7 @@
 
 t_point	rt_rotate_x(t_point before, double theta)
 {
-	t_point tmp;
+	t_point	tmp;
 
 	tmp.x = before.x;
 	tmp.y = cos(theta) * before.y - sin(theta) * before.z;
@@ -24,7 +24,7 @@ t_point	rt_rotate_x(t_point before, double theta)
 
 t_point	rt_rotate_y(t_point before, double theta)
 {
-	t_point tmp;
+	t_point	tmp;
 
 	tmp.x = cos(theta) * before.x + sin(theta) * before.z;
 	tmp.y = before.y;
@@ -34,7 +34,7 @@ t_point	rt_rotate_y(t_point before, double theta)
 
 t_point	rt_rotate_z(t_point before, double theta)
 {
-	t_point tmp;
+	t_point	tmp;
 
 	tmp.x = cos(theta) * before.x - sin(theta) * before.y;
 	tmp.y = sin(theta) * before.x + cos(theta) * before.y;

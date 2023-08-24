@@ -216,7 +216,7 @@ void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
 
 // rt_simulation/
 // rt_ambient.c
-int		rt_add_ambient_light(t_ambient *ambient, int *color, t_color tmp);
+int		rt_add_ambient_light(t_ambient *amb, int *c, t_color tmp, t_color obj);
 // rt_diffuse.c
 t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj);
 double	rt_get_diffuse_light(t_light *l, t_ray hit);
@@ -232,7 +232,7 @@ t_point	normalize_vec(t_point a);
 t_point	add_vec(t_point const a, t_point const b);
 t_point	multiply_vec(double const mul, t_point const vec);
 
-int	cal_sphere(t_sphere const *s_list, t_ray *cam, t_ray *hit_point);
+int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point, t_color *c);
 
 
 #endif
