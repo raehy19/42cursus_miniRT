@@ -55,8 +55,6 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 
 	ray[0].loc = list->camera.loc;
 	ray[0].vec = cal_ray(&a, &b, &list->camera);
-	if (a % 20 == 0 && b % 20 == 0)
-		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray[0].vec.x, ray[0].vec.y, ray[0].vec.z);
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
 	hitflag[0] = cal_object(list, &ray[0], &ray[1]);
 	if (hitflag[0])

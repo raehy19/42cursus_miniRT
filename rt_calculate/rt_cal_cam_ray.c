@@ -28,20 +28,9 @@ t_point	cal_ray(int *x, int *y, t_camera const *camera)
 	ret = add_vec(multiply_vec(cos(theta), camera->vec),
 			multiply_vec(sin(theta), outer_prod));
 	outer_prod = normalize_vec(rt_outer_prod(&camera->vec, &outer_prod));
-	if (*x % 20 == 0 && *y % 20 == 0)
-	{
-		printf(" / theta width : %lf / %lf / ", theta, theta / M_PI * 180);
-		printf(" / outer product : %lf %lf %lf / ", outer_prod.x, outer_prod.y, outer_prod.z);
-	}
-	theta = (camera->fov / 2 * (HEIGHT / WIDTH))
+	theta = - (camera->fov / 2 * (HEIGHT / WIDTH))
 		* ((HEIGHT / 2) - *y) / (HEIGHT / 2) * M_PI / 180;
-	if (*x % 20 == 0 && *y % 20 == 0)
-	{
-		printf(" / theta height : %lf / %lf / ", theta, theta / M_PI * 180);
-		printf(" / outer product : %lf %lf %lf / ", outer_prod.x, outer_prod.y, outer_prod.z);
-	}
 	ret = add_vec(multiply_vec(cos(theta), ret),
-//	ret = add_vec( ret,
 			multiply_vec(sin(theta), outer_prod));
 	return (ret);
 }

@@ -35,7 +35,7 @@ t_ray	rt_get_point_to_light(t_ray obj, t_point light)
 {
 	t_ray	new;
 
-	new.loc = add_vec(obj.loc, normalize_vec(obj.vec));
+	new.loc = add_vec(obj.loc, multiply_vec(0.0001, normalize_vec(obj.vec)));
 	new.vec = normalize_vec(rt_get_vec(light, new.loc));
 	return (new);
 }
