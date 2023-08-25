@@ -29,7 +29,7 @@ PARSE_DIR = rt_parse/
 MLX_DIR = rt_mlx/
 CALCULATE_DIR = rt_calculate/
 UTILS_DIR = rt_utils/
-SIMUL_DIR = rt_simulation/
+CAL_UTILS_DIR = rt_cal_utils/
 
 SRCS := \
 	miniRT.c \
@@ -46,8 +46,13 @@ PARSE_SRCS := \
 	rt_set_data4.c \
 	rt_set_data5.c \
 
+CAL_UTILS_SRCS := \
+	rt_cal_utils1.c \
+	rt_cal_utils2.c \
+
 CALCULATE_SRCS := \
-	rt_cal_utils.c \
+	rt_ambient.c \
+	rt_diffuse.c \
 	rt_cal_cam_ray.c \
 	rt_cal_object.c \
 	rt_sphere.c \
@@ -62,11 +67,6 @@ UTILS_SRCS := \
 	rt_print.c \
 	rt_rotate_vector.c \
 
-SIMUL_SRCS := \
-	rt_ambient.c \
-	rt_diffuse.c \
-	rt_simulation_utils.c \
-
 all : $(NAME)
 
 OBJS := \
@@ -75,7 +75,7 @@ OBJS := \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS:.c=.o)) \
 	$(addprefix $(CALCULATE_DIR), $(CALCULATE_SRCS:.c=.o)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS:.c=.o)) \
-	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS:.c=.o)) \
+	$(addprefix $(CAL_UTILS_DIR), $(CAL_UTILS_SRCS:.c=.o)) \
 
 DEPS := \
 	$(SRCS:%.c=%.d) \
@@ -83,7 +83,7 @@ DEPS := \
 	$(addprefix $(MLX_DIR), $(MLX_SRCS:.c=.d)) \
 	$(addprefix $(CALCULATE_DIR), $(CALCULATE_SRCS:.c=.d)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS:.c=.d)) \
-	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS:.c=.d)) \
+	$(addprefix $(CAL_UTILS_DIR), $(CAL_UTILS_SRCS:.c=.d)) \
 
 -include $(DEPS) $(BONUS_DEPS)
 
@@ -125,6 +125,6 @@ norm :
 	$(addprefix $(MLX_DIR), $(MLX_SRCS)) \
 	$(addprefix $(CALCULATE_DIR), $(CALCULATE_SRCS)) \
 	$(addprefix $(UTILS_DIR), $(UTILS_SRCS)) \
-	$(addprefix $(SIMUL_DIR), $(SIMUL_SRCS)) \
+	$(addprefix $(CAL_UTILS_DIR), $(CAL_UTILS_SRCS)) \
 
 .PHONY: all clean fclean re

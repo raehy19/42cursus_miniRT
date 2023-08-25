@@ -215,31 +215,31 @@ int		rt_get_pixel_color(t_minirt *list, int a, int b, int *color);
 int		rt_display_mlx(t_mlxlist *mlx, char *name);
 void	rt_mlx_pixel_put(t_mlxlist *data, int x, int y, int color);
 
-// rt_simulation/
+// rt_cal_utils/
+// rt_cal_utils1.c
+t_point	normalize_vec(t_point a);
+t_point	add_vec(t_point const a, t_point const b);
+t_point	multiply_vec(double const mul, t_point const vec);
+double	cal_distance(t_point const p1, t_point const p2);
+// rt_cal_utils2.c
+int		rt_add_light_color(t_color tmp, int *color);
+t_ray	rt_get_point_to_light(t_ray obj, t_point light);
+t_point	rt_get_vec(t_point const a, t_point const b);
+double	rt_inner_prod(t_point const a, t_point const b);
+t_point	rt_outer_prod(t_point const *a, t_point const *b);
+
+// rt_calculate/
 // rt_ambient.c
 int		rt_add_ambient_light(t_ambient *amb, int *c, t_color tmp, t_color obj);
 // rt_diffuse.c
 t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj);
 double	rt_get_diffuse_light(t_light *l, t_ray hit);
-// rt_simulation_utils.c
-int		rt_add_light_color(t_color tmp, int *color);
-t_ray	rt_get_point_to_light(t_ray obj, t_point light);
-t_point	rt_get_vec(t_point const a, t_point const b);
-double	rt_inner_prod(t_point const a, t_point const b);
-
-// rt_calculate
 // rt_cal_cam_ray.c
 t_point	cal_ray(int *x, int *y, t_camera const *camera);
-// rt_cal_cam_utils.c
-t_point	cal_outer_prod(t_point const *a, t_point const *b);
-t_point	normalize_vec(t_point a);
-t_point	add_vec(t_point const a, t_point const b);
-t_point	sub_vec(t_point const a, t_point const b);
-t_point	multiply_vec(double const mul, t_point const vec);
 // rt_cal_object.c
 int		cal_object(t_minirt *list, t_ray *cam, t_ray *hit_point);
 int		check_object(t_minirt *list, t_ray *ray);
-
+// rt_sphere.c
 int		cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag);
 int		check_sphere(t_sphere *list, t_ray *cam, int flag);
 

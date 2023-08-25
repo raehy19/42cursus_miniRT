@@ -12,12 +12,6 @@
 
 #include "../miniRT.h"
 
-double	cal_distance(t_point const p1, t_point const p2)
-{
-	return (sqrt(pow(p1.x - p2.x, 2)
-			+ pow(p1.y - p2.y, 2)
-			+ pow(p1.z - p2.z, 2)));
-}
 
 t_ray	cal_hit_point(double q1, double q2, t_ray const *cam, t_point const *sp)
 {
@@ -59,7 +53,7 @@ int	cal_equation(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
 	*ret = cal_hit_point((-coef.b + sqrt(coef.d)) / (2 * coef.a),
 			(-coef.b - sqrt(coef.d)) / (2 * coef.a),
 			cam, &sphere->loc);
-	if (rt_inner_prod(sub_vec(ret->loc, cam->loc), cam->vec) < 0)
+	if (rt_inner_prod(rt_get_vec(ret->loc, cam->loc), cam->vec) < 0)
 		return (0);
 	return (1);
 }

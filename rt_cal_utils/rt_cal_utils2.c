@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_simulation_utils.c                              :+:      :+:    :+:   */
+/*   rt_cal_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jijeong <jijeong@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -56,4 +56,14 @@ double	rt_inner_prod(t_point const a, t_point const b)
 
 	res = (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 	return (res);
+}
+
+t_point	rt_outer_prod(t_point const *a, t_point const *b)
+{
+	t_point	ret;
+
+	ret.x = (a->y * b->z - a->z * b->y);
+	ret.y = (a->z * b->x - a->x * b->z);
+	ret.z = (a->x * b->y - a->y * b->x);
+	return (ret);
 }

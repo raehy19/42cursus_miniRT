@@ -20,14 +20,14 @@ t_point	cal_ray(int *x, int *y, t_camera const *camera)
 	double	theta;
 
 	z = (t_point){0, 0, 1};
-	outer_prod = normalize_vec(cal_outer_prod(&camera->vec, &z));
+	outer_prod = normalize_vec(rt_outer_prod(&camera->vec, &z));
 	if (outer_prod.x == 0 && outer_prod.y == 0 && outer_prod.z == 0)
 		outer_prod.x = 1;
 	theta = (camera->fov / 2) * (*x - (WIDTH / 2)) / (WIDTH / 2)
 		* M_PI / 180;
 	ret = add_vec(multiply_vec(cos(theta), camera->vec),
 			multiply_vec(sin(theta), outer_prod));
-	outer_prod = normalize_vec(cal_outer_prod(&camera->vec, &outer_prod));
+	outer_prod = normalize_vec(rt_outer_prod(&camera->vec, &outer_prod));
 	if (*x % 20 == 0 && *y % 20 == 0)
 	{
 		printf(" / theta width : %lf / %lf / ", theta, theta / M_PI * 180);
