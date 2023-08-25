@@ -12,7 +12,6 @@
 
 #include "../miniRT.h"
 
-
 t_ray	cal_hit_point(double q1, double q2, t_ray const *cam, t_point const *sp)
 {
 	t_ray	ret;
@@ -35,7 +34,7 @@ t_ray	cal_hit_point(double q1, double q2, t_ray const *cam, t_point const *sp)
 	return (ret);
 }
 
-int	cal_equation(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
+int	cal_eq_sp(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
 {
 	t_q_e_c	coef;
 
@@ -64,7 +63,7 @@ int	cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag)
 
 	while (list)
 	{
-		if (cal_equation(list, cam, &temp))
+		if (cal_eq_sp(list, cam, &temp))
 		{
 			if (flag == 0)
 			{
@@ -90,7 +89,7 @@ int	check_sphere(t_sphere *list, t_ray *hit, t_point light, int flag)
 
 	while (list)
 	{
-		if (cal_equation(list, hit, &temp)
+		if (cal_eq_sp(list, hit, &temp)
 			&& cal_distance(hit->loc,light) > cal_distance(hit->loc, temp.loc))
 		{
 			if (flag == 0)

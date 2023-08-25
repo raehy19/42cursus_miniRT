@@ -238,9 +238,12 @@ double	rt_get_diffuse_light(t_light *l, t_ray hit);
 t_point	cal_ray(int *x, int *y, t_camera const *camera);
 // rt_cal_object.c
 int		cal_object(t_minirt *list, t_ray *cam, t_ray *hit_point);
-int		check_object(t_minirt *list, t_ray *ray);
+int		check_object(t_minirt *list, t_ray *hit);
 // rt_sphere.c
 int		cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag);
 int		check_sphere(t_sphere *list, t_ray *hit, t_point light, int flag);
+// rt_plane.c
+int	cal_plane(t_plane *list, t_ray *cam, t_ray *hit_point, int flag);
+int	check_plane(t_plane *list, t_ray *hit, t_point light, int flag);
 
 #endif

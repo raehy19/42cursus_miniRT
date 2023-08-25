@@ -56,6 +56,7 @@ CALCULATE_SRCS := \
 	rt_cal_cam_ray.c \
 	rt_cal_object.c \
 	rt_sphere.c \
+	rt_plane.c \
 
 MLX_SRCS := \
 	rt_mlx_display.c \
