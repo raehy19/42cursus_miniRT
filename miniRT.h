@@ -221,7 +221,6 @@ int		rt_add_ambient_light(t_ambient *amb, int *c, t_color tmp, t_color obj);
 // rt_diffuse.c
 t_color	rt_add_diffuse_light(t_light *l, t_ray hit, t_color obj);
 double	rt_get_diffuse_light(t_light *l, t_ray hit);
-int		check_sphere(t_sphere const *list, t_ray *cam);
 // rt_simulation_utils.c
 int		rt_add_light_color(t_color tmp, int *color);
 t_ray	rt_get_point_to_light(t_ray obj, t_point light);
@@ -237,8 +236,11 @@ t_point	normalize_vec(t_point a);
 t_point	add_vec(t_point const a, t_point const b);
 t_point	sus_vec(t_point const a, t_point const b);
 t_point	multiply_vec(double const mul, t_point const vec);
+// rt_cal_object.c
+int		cal_object(t_minirt *list, t_ray *cam, t_ray *hit_point);
+int		check_object(t_minirt *list, t_ray *ray);
 
-int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point);
-
+int		cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag);
+int		check_sphere(t_sphere *list, t_ray *cam, int flag);
 
 #endif

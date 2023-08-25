@@ -49,6 +49,7 @@ PARSE_SRCS := \
 CALCULATE_SRCS := \
 	rt_cal_utils.c \
 	rt_cal_cam_ray.c \
+	rt_cal_object.c \
 	rt_sphere.c \
 
 MLX_SRCS := \

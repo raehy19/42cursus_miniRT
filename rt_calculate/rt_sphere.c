@@ -64,12 +64,10 @@ int	cal_equation(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
 	return (1);
 }
 
-int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point)
+int	cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag)
 {
-	int		flag;
 	t_ray	temp;
 
-	flag = 0;
 	while (list)
 	{
 		if (cal_equation(list, cam, &temp))
@@ -92,12 +90,10 @@ int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point)
 	return (flag);
 }
 
-int	check_sphere(t_sphere const *list, t_ray *cam)
+int	check_sphere(t_sphere *list, t_ray *cam, int flag)
 {
-	int		flag;
 	t_ray	temp;
 
-	flag = 0;
 	while (list)
 	{
 		if (cal_equation(list, cam, &temp))
