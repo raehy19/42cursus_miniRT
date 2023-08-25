@@ -84,13 +84,14 @@ int	cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag)
 	return (flag);
 }
 
-int	check_sphere(t_sphere *list, t_ray *cam, int flag)
+int	check_sphere(t_sphere *list, t_ray *hit, t_point light, int flag)
 {
 	t_ray	temp;
 
 	while (list)
 	{
-		if (cal_equation(list, cam, &temp))
+		if (cal_equation(list, hit, &temp)
+			&& cal_distance(hit->loc,light) > cal_distance(hit->loc, temp.loc))
 		{
 			if (flag == 0)
 				flag = 1;

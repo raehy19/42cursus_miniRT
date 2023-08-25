@@ -241,6 +241,6 @@ int		cal_object(t_minirt *list, t_ray *cam, t_ray *hit_point);
 int		check_object(t_minirt *list, t_ray *ray);
 // rt_sphere.c
 int		cal_sphere(t_sphere *list, t_ray *cam, t_ray *hit_point, int flag);
-int		check_sphere(t_sphere *list, t_ray *cam, int flag);
+int		check_sphere(t_sphere *list, t_ray *hit, t_point light, int flag);
 
 #endif

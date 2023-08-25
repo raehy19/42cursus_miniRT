@@ -26,6 +26,6 @@ int	check_object(t_minirt *list, t_ray *ray)
 	int	flag;
 
 	flag = 0;
-	flag = check_sphere(list->sphere, ray, flag);
+	flag = check_sphere(list->sphere, ray, list->light.loc, flag);
 	return (flag);
 }
