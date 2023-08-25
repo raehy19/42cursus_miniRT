@@ -46,7 +46,7 @@ t_point	add_vec(t_point const a, t_point const b)
 	return (ret);
 }
 
-t_point	sus_vec(t_point const a, t_point const b)
+t_point	sub_vec(t_point const a, t_point const b)
 {
 	t_point	ret;
 

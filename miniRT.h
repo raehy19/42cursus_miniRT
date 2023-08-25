@@ -234,7 +234,7 @@ t_point	cal_ray(int *x, int *y, t_camera const *camera);
 t_point	cal_outer_prod(t_point const *a, t_point const *b);
 t_point	normalize_vec(t_point a);
 t_point	add_vec(t_point const a, t_point const b);
-t_point	sus_vec(t_point const a, t_point const b);
+t_point	sub_vec(t_point const a, t_point const b);
 t_point	multiply_vec(double const mul, t_point const vec);
 // rt_cal_object.c
 int		cal_object(t_minirt *list, t_ray *cam, t_ray *hit_point);
