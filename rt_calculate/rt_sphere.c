@@ -64,7 +64,7 @@ int	cal_equation(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
 	return (1);
 }
 
-int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point, t_color *c)
+int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point)
 {
 	int		flag;
 	t_ray	temp;
@@ -77,14 +77,14 @@ int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point, t_color *c)
 			if (flag == 0)
 			{
 				*hit_point = temp;
-				*c = list->color;
+				hit_point->col = list->color;
 				flag = 1;
 			}
 			else if (cal_distance(hit_point->loc, cam->loc) \
 					> cal_distance(temp.loc, cam->loc))
 			{
 				*hit_point = temp;
-				*c = list->color;
+				hit_point->col = list->color;
 			}
 		}
 		list = list->next;

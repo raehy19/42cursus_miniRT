@@ -59,14 +59,14 @@ int	rt_get_pixel_color(t_minirt *list, int a, int b, int *color)
 	if (a % 20 == 0 && b % 20 == 0)
 		printf("/ view %d, %d : %lf , %lf , %lf\n", a, b, ray[0].vec.x, ray[0].vec.y, ray[0].vec.z);
 	ft_memset(&tmpcolor, 0, sizeof(t_color));
-	hitflag[0] = cal_sphere(list->sphere, &ray[0], &ray[1], &objcolor);
+	hitflag[0] = cal_sphere(list->sphere, &ray[0], &ray[1]);
 	if (hitflag[0])
 	{
 		ray[2] = rt_get_point_to_light(ray[1], list->light.loc);
 		hitflag[1] = check_sphere(list->sphere, &ray[2]);
 		if (hitflag[1] == FALSE)
-			tmpcolor = rt_add_diffuse_light(&list->light, ray[1], objcolor);
-		rt_add_ambient_light(&list->ambient, color, tmpcolor, objcolor);
+			tmpcolor = rt_add_diffuse_light(&list->light, ray[1], ray[1].col);
+		rt_add_ambient_light(&list->ambient, color, tmpcolor, ray[1].col);
 	}
 	else
 		rt_add_light_color(tmpcolor, color);

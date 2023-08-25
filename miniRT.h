@@ -53,12 +53,6 @@ typedef struct s_point
 	double	z;
 }			t_point;
 
-typedef struct s_ray
-{
-	t_point	loc;
-	t_point	vec;
-}			t_ray;
-
 typedef struct s_color
 {
 	int	tr;
@@ -66,6 +60,13 @@ typedef struct s_color
 	int	blue;
 	int	green;
 }		t_color;
+
+typedef struct s_ray
+{
+	t_point	loc;
+	t_point	vec;
+	t_color	col;
+}			t_ray;
 
 typedef struct s_ambient
 {
@@ -237,7 +238,7 @@ t_point	add_vec(t_point const a, t_point const b);
 t_point	sus_vec(t_point const a, t_point const b);
 t_point	multiply_vec(double const mul, t_point const vec);
 
-int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point, t_color *c);
+int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point);
 
 
 #endif
