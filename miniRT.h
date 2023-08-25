@@ -245,5 +245,8 @@ int		check_sphere(t_sphere *list, t_ray *hit, t_point light, int flag);
 // rt_plane.c
 int	cal_plane(t_plane *list, t_ray *cam, t_ray *hit_point, int flag);
 int	check_plane(t_plane *list, t_ray *hit, t_point light, int flag);
+// rt_cylinder.c
+int	cal_cylinder(t_cylinder *list, t_ray *cam, t_ray *hit_point, int flag);
+int	check_cylinder(t_cylinder *list, t_ray *hit, t_point light, int flag);
 
 #endif

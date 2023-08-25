@@ -19,6 +19,7 @@ int	cal_object(t_minirt *list, t_ray *cam, t_ray *hit_point)
 	flag = 0;
 	flag = cal_sphere(list->sphere, cam, hit_point, flag);
 	flag = cal_plane(list->plane, cam, hit_point, flag);
+	flag = cal_cylinder(list->cylinder, cam, hit_point, flag);
 	return (flag);
 }
 
@@ -29,5 +30,6 @@ int	check_object(t_minirt *list, t_ray *hit)
 	flag = 0;
 	flag = check_sphere(list->sphere, hit, list->light.loc, flag);
 	flag = check_plane(list->plane, hit, list->light.loc, flag);
+	flag = check_cylinder(list->cylinder, hit, list->light.loc, flag);
 	return (flag);
 }
