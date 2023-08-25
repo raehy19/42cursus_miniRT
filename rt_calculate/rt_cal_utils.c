@@ -46,6 +46,16 @@ t_point	add_vec(t_point const a, t_point const b)
 	return (ret);
 }
 
+t_point	sus_vec(t_point const a, t_point const b)
+{
+	t_point	ret;
+
+	ret.x = a.x - b.x;
+	ret.y = a.y - b.y;
+	ret.z = a.z - b.z;
+	return (ret);
+}
+
 t_point	multiply_vec(double const mul, t_point const vec)
 {
 	t_point	ret;

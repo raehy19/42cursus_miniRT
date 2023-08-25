@@ -59,10 +59,9 @@ int	cal_equation(t_sphere const *sphere, t_ray const *cam, t_ray *ret)
 	*ret = cal_hit_point((-coef.b + sqrt(coef.d)) / (2 * coef.a),
 			(-coef.b - sqrt(coef.d)) / (2 * coef.a),
 			cam, &sphere->loc);
-	if (rt_inner_prod(ret->vec, cam->vec) < 0)
-		return (1);
-	else
+	if (rt_inner_prod(sus_vec(ret->loc, cam->loc), cam->vec) < 0)
 		return (0);
+	return (1);
 }
 
 int	cal_sphere(t_sphere const *list, t_ray *cam, t_ray *hit_point, t_color *c)
