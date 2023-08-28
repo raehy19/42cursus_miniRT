@@ -34,3 +34,30 @@ t_point	rt_cal_cy_hit_vec(t_point p, t_point c, t_point h)
 		normalize_vec(h))));
 	return (res);
 }
+
+int	cal_eq_circle(t_ray circle, t_ray *cam, t_ray *ret)
+{
+	double	t;
+
+	if (rt_inner_prod(circle.vec, cam->vec) == 0)
+	{
+		if (rt_inner_prod(circle.vec, rt_get_vec(cam->loc, circle.loc)) != 0)
+			return (0);
+		ret->loc = cam->loc;
+		ret->vec = circle.vec;
+		return (1);
+	}
+	t = ((circle.loc.x - cam->loc.x) * circle.vec.x \
+		+ (circle.loc.y - cam->loc.y) * circle.vec.y \
+		+ (circle.loc.z - cam->loc.z) * circle.vec.z) \
+		/ (circle.vec.x * cam->vec.x \
+		+ circle.vec.y * cam->vec.y \
+		+ circle.vec.z * cam->vec.z);
+	ret->loc.x = cam->loc.x + t * cam->vec.x;
+	ret->loc.y = cam->loc.y + t * cam->vec.y;
+	ret->loc.z = cam->loc.z + t * cam->vec.z;
+	ret->vec = circle.vec;
+	if (rt_inner_prod(rt_get_vec(ret->loc, cam->loc), cam->vec) < 0)
+		return (FALSE);
+	return (TRUE);
+}

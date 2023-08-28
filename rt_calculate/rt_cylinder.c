@@ -16,6 +16,7 @@ int	cal_cy_hit_point(t_ray *ret, double *q, t_ray *cam, t_cylinder *cy)
 {
 	t_point	p[2];
 	double	cos[4];
+	t_ray	ray;
 
 	p[0] = add_vec(cam->loc, multiply_vec(q[0], cam->vec));
 	p[1] = add_vec(cam->loc, multiply_vec(q[1], cam->vec));
@@ -28,14 +29,12 @@ int	cal_cy_hit_point(t_ray *ret, double *q, t_ray *cam, t_cylinder *cy)
 	rt_cal_cy_cos(&cos[0], &p[0], cy->loc, cy->h_loc);
 	if ((0 > cos[0] && 0 > cos[2]) || (0 > cos[1] && 0 > cos[3]))
 		return (FALSE);
-	ret->loc = cy->loc;
-	ret->vec = multiply_vec(-1, cy->vec);
+	ray = (t_ray){cy->loc, multiply_vec(-1, cy->vec), cy->color};
 	if (0 > cos[0])
-		return (TRUE);
-	ret->loc = cy->h_loc;
-	ret->vec = multiply_vec(1, cy->vec);
+		return (cal_eq_circle(ray, cam, ret));
+	ray = (t_ray){cy->h_loc, multiply_vec(1, cy->vec), cy->color};
 	if (0 > cos[1])
-		return (TRUE);
+		return (cal_eq_circle(ray, cam, ret));
 	ret->loc = p[0];
 	ret->vec = rt_cal_cy_hit_vec(ret->loc, cy->loc, cy->vec);
 	return (TRUE);
@@ -108,13 +107,12 @@ int	check_cylinder(t_cylinder *list, t_ray *hit, t_point light, int flag)
 	while (list)
 	{
 		if (cal_eq_cy(list, hit, &temp) \
-		&& (cal_distance(hit->loc, light) > cal_distance(hit->loc, temp.loc)))
+		&& (cal_distance(hit->loc, light) > cal_distance(light, temp.loc)))
 		{
 			if (flag == 0)
 				flag = 1;
 		}
 		list = list->next;
 	}
-	flag = 0;
 	return (flag);
 }
