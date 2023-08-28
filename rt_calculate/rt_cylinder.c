@@ -12,6 +12,30 @@
 
 #include "../miniRT.h"
 
+int	cal_cy_hit_point(t_ray *ret, double *q, t_ray *cam, t_cylinder *cy)
+{
+	t_point	p[2];
+	double	cos[4];
+
+	p[0] = add_vec(cam->loc, multiply_vec(q[0], cam->vec));
+	p[1] = add_vec(cam->loc, multiply_vec(q[1], cam->vec));
+	if (cal_distance(p[0], cam->loc) > cal_distance(p[1], cam->loc))
+	{
+		ret->loc = p[0];
+		p[0] = p[1];
+		p[1] = ret->loc;
+	}
+	rt_cal_cy_cos(&cos[0], p[0], cy->loc, cy->h_loc);
+	rt_cal_cy_cos(&cos[2], p[1], cy->loc, cy->h_loc);
+	if  ((0 > cos[0] && 0 > cos[2]) || (0 > cos[1] && 0> cos[3]))
+		return (FALSE);
+	ret->loc = p[0];
+	ret->vec = rt_get_vec(rt_get_vec(ret->loc, cy->loc), \
+		multiply_vec(rt_inner_prod(rt_get_vec(ret->loc, cy->loc), cy->vec), \
+		normalize_vec(cy->vec)));
+	return (TRUE);
+}
+
 t_q_e_c	cal_coef_cy(t_cylinder *cylinder, t_ray *cam)
 {
 	t_q_e_c	coef;
@@ -34,13 +58,18 @@ t_q_e_c	cal_coef_cy(t_cylinder *cylinder, t_ray *cam)
 int	cal_eq_cy(t_cylinder *cylinder, t_ray *cam, t_ray *ret)
 {
 	t_q_e_c	coef;
+	double	res[2];
 
 	coef = cal_coef_cy(cylinder, cam);
 
 	(void )ret;
 	if (coef.d < 0)
 		return (0);
-	return (1);
+	res[0] = (-coef.b + sqrt(coef.d)) / (2 * coef.a);
+	res[1] = (-coef.b - sqrt(coef.d)) / (2 * coef.a);
+	if (cal_cy_hit_point(ret, res, cam, cylinder) == FALSE)
+		return (FALSE);
+	return (TRUE);
 }
 
 int	cal_cylinder(t_cylinder *list, t_ray *cam, t_ray *hit_point, int flag)

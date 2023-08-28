@@ -49,6 +49,7 @@ PARSE_SRCS := \
 CAL_UTILS_SRCS := \
 	rt_cal_utils1.c \
 	rt_cal_utils2.c \
+	rt_cal_utils3.c \
 
 CALCULATE_SRCS := \
 	rt_ambient.c \

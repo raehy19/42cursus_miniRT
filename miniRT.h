@@ -228,6 +228,8 @@ t_ray	rt_get_point_to_light(t_ray obj, t_point light);
 t_point	rt_get_vec(t_point const a, t_point const b);
 double	rt_inner_prod(t_point const a, t_point const b);
 t_point	rt_outer_prod(t_point const *a, t_point const *b);
+// rt_cal_utils3.c
+int		rt_cal_cy_cos(double *res, t_point p, t_point c, t_point h);
 
 // rt_calculate/
 // rt_ambient.c
