@@ -81,6 +81,8 @@ int	rt_set_cylinder(char *line, t_minirt *list)
 		return (rt_error_msg("syntax error on line cy's height", 1));
 	if (rt_set_color(line, &i, &tmp->color))
 		return (rt_error_msg("syntax error on line cy's color", 1));
+	tmp->h_loc = add_vec(tmp->loc, multiply_vec(tmp->height, \
+		normalize_vec(tmp->vec)));
 	rt_add_cylinder_node(list, tmp);
 	return (SUCCESS);
 }

@@ -79,9 +79,11 @@ int	rt_print_cylinder_list_data(t_minirt *list, t_cylinder *tmpc)
 	while (tmpc != (void *)0)
 	{
 		printf("cylinder[%d]\t", i);
-		printf("[%f,%f,%f] [%f,%f,%f] [%f] [%f] [%d,%d,%d] [%p]\n", \
+		printf("[%f,%f,%f] [%f,%f,%f] [%f,%f,%f] ", \
 		tmpc->loc.x, tmpc->loc.y, tmpc->loc.z, \
-		tmpc->vec.x, tmpc->vec.y, tmpc->vec.z, \
+		tmpc->h_loc.x, tmpc->h_loc.y, tmpc->h_loc.z, \
+		tmpc->vec.x, tmpc->vec.y, tmpc->vec.z);
+		printf("[%f] [%f] [%d,%d,%d] [%p]\n", \
 		tmpc->diameter, tmpc->height, \
 		tmpc->color.red, tmpc->color.green, tmpc->color.blue, tmpc->next);
 		tmpc = tmpc->next;
