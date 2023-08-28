@@ -25,14 +25,19 @@ int	cal_cy_hit_point(t_ray *ret, double *q, t_ray *cam, t_cylinder *cy)
 		p[0] = p[1];
 		p[1] = ret->loc;
 	}
-	rt_cal_cy_cos(&cos[0], p[0], cy->loc, cy->h_loc);
-	rt_cal_cy_cos(&cos[2], p[1], cy->loc, cy->h_loc);
-	if  ((0 > cos[0] && 0 > cos[2]) || (0 > cos[1] && 0> cos[3]))
+	rt_cal_cy_cos(&cos[0], &p[0], cy->loc, cy->h_loc);
+	if ((0 > cos[0] && 0 > cos[2]) || (0 > cos[1] && 0 > cos[3]))
 		return (FALSE);
+	ret->loc = cy->loc;
+	ret->vec = multiply_vec(-1, cy->vec);
+	if (0 > cos[0])
+		return (TRUE);
+	ret->loc = cy->h_loc;
+	ret->vec = multiply_vec(1, cy->vec);
+	if (0 > cos[1])
+		return (TRUE);
 	ret->loc = p[0];
-	ret->vec = rt_get_vec(rt_get_vec(ret->loc, cy->loc), \
-		multiply_vec(rt_inner_prod(rt_get_vec(ret->loc, cy->loc), cy->vec), \
-		normalize_vec(cy->vec)));
+	ret->vec = rt_cal_cy_hit_vec(ret->loc, cy->loc, cy->vec);
 	return (TRUE);
 }
 
@@ -47,7 +52,7 @@ t_q_e_c	cal_coef_cy(t_cylinder *cylinder, t_ray *cam)
 	w = rt_get_vec(cam->loc, cylinder->loc);
 	norm_h = normalize_vec(cylinder->vec);
 	coef.a = rt_inner_prod(v, v) - pow(rt_inner_prod(v, norm_h), 2);
-	coef.b = 2 * (rt_inner_prod(v, w) - rt_inner_prod(v, norm_h)
+	coef.b = 2 * (rt_inner_prod(v, w) - rt_inner_prod(v, norm_h) \
 		* rt_inner_prod(w, norm_h));
 	coef.c = rt_inner_prod(w, w) - pow(rt_inner_prod(w, norm_h), 2)
 		- pow(cylinder->diameter, 2);
@@ -61,8 +66,6 @@ int	cal_eq_cy(t_cylinder *cylinder, t_ray *cam, t_ray *ret)
 	double	res[2];
 
 	coef = cal_coef_cy(cylinder, cam);
-
-	(void )ret;
 	if (coef.d < 0)
 		return (0);
 	res[0] = (-coef.b + sqrt(coef.d)) / (2 * coef.a);
@@ -104,13 +107,14 @@ int	check_cylinder(t_cylinder *list, t_ray *hit, t_point light, int flag)
 
 	while (list)
 	{
-		if (cal_eq_cy(list, hit, &temp)
-		&& cal_distance(hit->loc,light) > cal_distance(hit->loc, temp.loc))
+		if (cal_eq_cy(list, hit, &temp) \
+		&& (cal_distance(hit->loc, light) > cal_distance(hit->loc, temp.loc)))
 		{
 			if (flag == 0)
 				flag = 1;
 		}
 		list = list->next;
 	}
+	flag = 0;
 	return (flag);
 }

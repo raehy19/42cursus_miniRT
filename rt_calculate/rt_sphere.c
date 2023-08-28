@@ -90,7 +90,7 @@ int	check_sphere(t_sphere *list, t_ray *hit, t_point light, int flag)
 	while (list)
 	{
 		if (cal_eq_sp(list, hit, &temp)
-			&& cal_distance(hit->loc,light) > cal_distance(hit->loc, temp.loc))
+			&& cal_distance(hit->loc, light) > cal_distance(hit->loc, temp.loc))
 		{
 			if (flag == 0)
 				flag = 1;

@@ -19,16 +19,16 @@ int	cal_eq_pl(t_plane const *plane, t_ray const *cam, t_ray *ret)
 	if (rt_inner_prod(plane->vec, cam->vec) == 0)
 	{
 		if (rt_inner_prod(plane->vec, rt_get_vec(cam->loc, plane->loc)) != 0)
-			return(0);
+			return (0);
 		ret->loc = cam->loc;
 		ret->vec = plane->vec;
 		return (1);
 	}
-	t = ((plane->loc.x - cam->loc.x) * plane->vec.x
-		+ (plane->loc.y - cam->loc.y) * plane->vec.y
-		+ (plane->loc.z - cam->loc.z) * plane->vec.z)
-		/ (plane->vec.x * cam->vec.x
-		+ plane->vec.y * cam->vec.y
+	t = ((plane->loc.x - cam->loc.x) * plane->vec.x \
+		+ (plane->loc.y - cam->loc.y) * plane->vec.y \
+		+ (plane->loc.z - cam->loc.z) * plane->vec.z) \
+		/ (plane->vec.x * cam->vec.x \
+		+ plane->vec.y * cam->vec.y \
 		+ plane->vec.z * cam->vec.z);
 	ret->loc.x = cam->loc.x + t * cam->vec.x;
 	ret->loc.y = cam->loc.y + t * cam->vec.y;
@@ -72,7 +72,7 @@ int	check_plane(t_plane *list, t_ray *hit, t_point light, int flag)
 	while (list)
 	{
 		if (cal_eq_pl(list, hit, &temp)
-			&& cal_distance(hit->loc,light) > cal_distance(hit->loc, temp.loc))
+			&& cal_distance(hit->loc, light) > cal_distance(hit->loc, temp.loc))
 		{
 			if (flag == 0)
 				flag = 1;
@@ -81,5 +81,3 @@ int	check_plane(t_plane *list, t_ray *hit, t_point light, int flag)
 	}
 	return (flag);
 }
-
-
