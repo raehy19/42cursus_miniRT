@@ -15,14 +15,14 @@ NAME := miniRT
 CC := cc
 
 CFLAG := -Wall -Wextra -Werror -MMD -MP
-MLX_FLAG :=  -lmlx -framework OpenGL -framework AppKit
+MLX_FLAG := -Lmlx -framework OpenGL -framework AppKit
 
 RM := rm -f
 
 LIBFT := ./libft/libft.a
 LIBFT_DIR := libft
 
-MLX_LIB_NAME := libmlx.dylib
+MLX_LIB_NAME := libmlx.a
 MLX_LIB_DIR := mlx
 
 PARSE_DIR = rt_parse/
